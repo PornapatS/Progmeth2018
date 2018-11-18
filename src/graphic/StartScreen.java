@@ -99,7 +99,6 @@ public class StartScreen {
 			@Override
 			public void handle(ActionEvent event) {
 				Platform.exit();
-				
 			}
 		});
 	}
