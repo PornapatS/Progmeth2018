@@ -7,10 +7,12 @@ import character.AlienC;
 import character.Boss;
 import character.Player;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
@@ -51,7 +53,6 @@ public class GameWindow extends Canvas{
 		
 		player = new Player();
 		gameScreen = new GameScreen();
-		gameScreen.draw(gc);
 		
 		scene = new Scene(root);
 		
@@ -78,6 +79,7 @@ public class GameWindow extends Canvas{
 			
 			@Override
 			public void handle(long now) {
+				gameScreen.draw(gc);
 				frame = 0;
 				update();
 				isGameOver();
@@ -120,7 +122,7 @@ public class GameWindow extends Canvas{
 			windowAnimation.stop();
 			gameSound.stop();
 			bossSound.stop();
-			WinnerScreen.startanimation(gc);
+			WinnerScreen.startanimation(gc, player.getScore());
 		}
 	}
 }

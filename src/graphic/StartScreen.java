@@ -18,8 +18,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class StartScreen {
-	private final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 40);
-	private final Font titleFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 80);;
+	private static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 40);
+	private static final Font titleFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 100);;
 	private Stage primaryStage;
 	private Canvas canvas;
 	private HBox menu;
@@ -64,12 +64,10 @@ public class StartScreen {
 		startscreenAnimation = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
+				System.out.println(timer);
 				setBackground();
 				if(!isSoundOn) gameSound.play();
 				if(timer == 50) {
-					setBackground();
-				}
-				if(timer == 100) {
 					menu.getChildren().addAll(startButton, exitButton);
 				}
 				timer++;
@@ -81,9 +79,10 @@ public class StartScreen {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		background = new Image("startscreenbg.png");
 		gc.drawImage(background, 0, 0);
-		gc.setFill(Color.BISQUE);
+		gc.setFill(Color.DARKBLUE);
+		gc.setLineWidth(5);
 		gc.setFont(titleFont);
-		gc.fillText("ALIEN", 310, 500);
+		gc.fillText("A L I E N", 250, 500);
 	}
 	public void setupButton() {
 		startButton.setOnAction(new EventHandler<ActionEvent>() {

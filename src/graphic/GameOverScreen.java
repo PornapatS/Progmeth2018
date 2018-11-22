@@ -12,8 +12,8 @@ import javafx.scene.text.Font;
 public class GameOverScreen {
 	public static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 40);
 	public static final Font gameoverFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 100);
-	public static Image background;
-	public static AudioClip gameoverSound;
+	public static Image background  = new Image("gameoverscreenbg.png");
+	public static AudioClip gameoverSound = new AudioClip(ClassLoader.getSystemResource("Lil Touch.mp3").toString());
 	private static Thread t;
 	public Button mainmenuButton;
 	private boolean isDone;
@@ -22,10 +22,8 @@ public class GameOverScreen {
 
 	}
 	public static void draw(GraphicsContext gc) {
-		background = new Image("gameoverscreenbg.png");
-		gameoverSound = new AudioClip(ClassLoader.getSystemResource("Lil Touch.mp3").toString());
+		gc.drawImage(background, 0, 0);
 		gameoverSound.play();
-		
 		t = new Thread(new Runnable() {
 			
 			@Override
@@ -43,9 +41,9 @@ public class GameOverScreen {
 	}
 	public static void setUpGameover(GraphicsContext gc) {
 		gc.setFont(gameoverFont);
-		gc.setFill(Color.BLACK);
+		gc.setFill(Color.WHITE);
 		gc.setLineWidth(2);
-		gc.fillText("Game Over!", 100, 100);
+		gc.fillText("GAME OVER!", 150, 100);
 		gc.setFont(mainFont);
 //		gc.fillText("Score : ", 300, 250);
 		
