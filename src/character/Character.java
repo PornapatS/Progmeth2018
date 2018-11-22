@@ -7,4 +7,7 @@ public abstract class Character {
 	private int life;
 	private int numberOfCannon;
 	
+	public Character() {
+		// TODO Auto-generated constructor stub
+	}
 }

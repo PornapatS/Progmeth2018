@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class StartScreen {
-	private static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 40);
+	private static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 20);
 	private static final Font titleFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 100);;
 	private Stage primaryStage;
 	private Canvas canvas;
@@ -38,8 +38,6 @@ public class StartScreen {
 		this.primaryStage = primaryStage;
 		canvas = new Canvas(800, 600);
 		gc = canvas.getGraphicsContext2D();
-		startButton = new Button("Start");
-		exitButton = new Button("Exit");
 		setupButton();
 		gameSound.play();
 		isSoundOn = true;
@@ -85,6 +83,12 @@ public class StartScreen {
 		gc.fillText("A L I E N", 250, 500);
 	}
 	public void setupButton() {
+		startButton = new Button("Start");
+		exitButton = new Button("Exit");
+		startButton.setPrefSize(100, 45);
+		exitButton.setPrefSize(100, 45);
+		startButton.setFont(mainFont);
+		exitButton.setFont(mainFont);
 		startButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override

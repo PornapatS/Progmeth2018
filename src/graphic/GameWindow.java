@@ -79,9 +79,11 @@ public class GameWindow extends Canvas{
 			
 			@Override
 			public void handle(long now) {
+				updateLevel();
+				updateLife();
+				updateScore();
 				gameScreen.draw(gc);
 				frame = 0;
-				update();
 				isGameOver();
 			}
 		};
@@ -106,12 +108,17 @@ public class GameWindow extends Canvas{
 			}
 		});
 	}
-	public void update() {
-		// TODO Fill code!
+	public void updateScore() {
+		gameScreen.setScore(player.getScore());
 	}
-	
+	public void updateLevel() {
+		gameScreen.setLevel(player.getLevel());
+	}
+	public void updateLife() {
+		gameScreen.setLife(player.getLife());
+	}
 	public void isGameOver() {
-		if(player.getLife() < 0) {
+		if(player.getLife() <= 0) {
 			windowAnimation.stop();
 			gameSound.stop();
 			bossSound.stop();

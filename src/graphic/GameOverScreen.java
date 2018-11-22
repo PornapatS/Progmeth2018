@@ -13,7 +13,7 @@ public class GameOverScreen {
 	public static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 40);
 	public static final Font gameoverFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 100);
 	public static Image background  = new Image("gameoverscreenbg.png");
-	public static AudioClip gameoverSound = new AudioClip(ClassLoader.getSystemResource("Lil Touch.mp3").toString());
+	public static AudioClip gameoverSound = new AudioClip(ClassLoader.getSystemResource("gameover01.wav").toString());
 	private static Thread t;
 	public Button mainmenuButton;
 	private boolean isDone;

@@ -23,10 +23,20 @@ public class GameScreen implements IRenderable {
 		gc.setFill(Color.WHITE);
 		gc.fillText("Level : " + level, 100, 30);
 		gc.fillText("Score : " + score, 230, 30);
-		gc.drawImage(lifeImage, 375, 12);
-		gc.fillText(" : " + life, 400, 30);
+		gc.drawImage(lifeImage, 395, 12);
+		gc.fillText(" : " + life, 415, 30);
 	}
 	public boolean isShow() {
 		return true;
 	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public void setLife(int life) {
+		this.life = life;
+	}
+	
 }

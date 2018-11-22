@@ -1,15 +1,12 @@
 package character;
 
 public class Boss {
-	private boolean isAlive;
-	private int life;
+	private int score = 300;
+	private int life = 10;
+	private int speed = 10;
 	
 	public Boss() {
-		
-	}
 
-	public boolean isAlive() {
-		return isAlive;
 	}
 	
 }
