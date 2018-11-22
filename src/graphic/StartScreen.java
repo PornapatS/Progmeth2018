@@ -91,7 +91,11 @@ public class StartScreen {
 			@Override
 			public void handle(ActionEvent arg0) {
 				isGameStart = true;
+				GameWindow game = new GameWindow(primaryStage);
+				game.draw();
 				startscreenAnimation.stop();
+				gameSound.stop();
+				isSoundOn = false;
 			}
 		});
 		exitButton.setOnAction(new EventHandler<ActionEvent>() {
