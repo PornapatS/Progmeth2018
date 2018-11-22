@@ -89,7 +89,7 @@ public class StartScreen {
 		startButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
-			public void handle(ActionEvent arg0) {
+			public void handle(ActionEvent event) {
 				isGameStart = true;
 				GameWindow game = new GameWindow(primaryStage);
 				game.draw();

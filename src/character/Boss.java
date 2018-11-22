@@ -5,7 +5,11 @@ public class Boss {
 	private int life;
 	
 	public Boss() {
+		
+	}
 
+	public boolean isAlive() {
+		return isAlive;
 	}
 	
 }

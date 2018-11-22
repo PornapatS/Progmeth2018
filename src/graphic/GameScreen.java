@@ -5,24 +5,26 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import logic.IRenderable;
 
-public class GameScreen {
+public class GameScreen implements IRenderable {
 	private int level = 1;
 	private int score = 0;
 	private int life = 10;
-	private Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 20);
-	public Image background;
+	private Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 25);
+	public Image background = new Image("gamescreenbg.png");
+	public Image lifeImage = new Image("life.png");
 	
 	public GameScreen() {
-		background = new Image("gamescreenbg.png");
 	}
 	public void draw(GraphicsContext gc) {
 		gc.drawImage(background, 0, 0);
 		gc.setFont(mainFont);
-		gc.setFill(Color.BLACK);
-		gc.fillText("Level : " + level, 50, 20);
-		gc.fillText("Score : " + score, 150, 20);
-		gc.fillText("Life : " + life, 250, 20);
+		gc.setFill(Color.WHITE);
+		gc.fillText("Level : " + level, 100, 30);
+		gc.fillText("Score : " + score, 230, 30);
+		gc.drawImage(lifeImage, 375, 12);
+		gc.fillText(" : " + life, 400, 30);
 	}
 	public boolean isShow() {
 		return true;

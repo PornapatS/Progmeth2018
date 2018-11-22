@@ -36,7 +36,7 @@ public class WinnerScreen {
 		t.setDaemon(true);
 		t.start();
 	}
-	public static void winneranimation(GraphicsContext gc) {
+	public static void startanimation(GraphicsContext gc) {
 		draw(gc);
 	}
 	public static boolean isDone() {
