@@ -11,7 +11,6 @@ public class WinnerScreen {
 	public static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 40);
 	public static final Font winnerFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 100);
 	public static Image background = new Image("winnerscreenbg.png");
-	public Button mainmenuButton;
 	public static AudioClip winnerSound = new AudioClip(ClassLoader.getSystemResource("winner.wav").toString());
 	public static boolean isDone = false;
 	

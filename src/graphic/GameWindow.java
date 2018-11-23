@@ -19,6 +19,7 @@ public class GameWindow extends Canvas{
 	private AnimationTimer windowAnimation;
 	private GameScreen gameScreen;
 	private GraphicsContext gc;
+	private StackPane root;
 	private Scene scene;
 	private Stage primaryStage;
 	
@@ -28,7 +29,7 @@ public class GameWindow extends Canvas{
 	private boolean isAddedBoss = false;
 
 	private Player player;
-	private Boss boss;
+	private Boss boss = new Boss();
 	private Alien alienA;
 	private Alien alienB;	
 	private Alien alienC;
@@ -41,7 +42,7 @@ public class GameWindow extends Canvas{
 		setWidth(800);
 		setHeight(600);
 		gc = getGraphicsContext2D();
-		StackPane root = new StackPane();
+		root = new StackPane();
 		root.getChildren().add(gc.getCanvas());
 		requestFocus();
 		
@@ -68,7 +69,8 @@ public class GameWindow extends Canvas{
 					public void run() {
 						while(!isOver || isStageOn) {
 							player.addScore(10);
-							player.addLife(-1);
+//							player.addLife(-1);
+// set boss is dead. (life = 0)
 							updateData();
 							//updateallPos();
 							if(!isOver) {
@@ -78,6 +80,7 @@ public class GameWindow extends Canvas{
 							}
 							try {
 								Thread.sleep(500);
+								isAddedBoss = true;
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}

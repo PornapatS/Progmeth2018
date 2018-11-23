@@ -15,11 +15,9 @@ public class GameOverScreen {
 	public static Image background  = new Image("gameoverscreenbg.png");
 	public static AudioClip gameoverSound = new AudioClip(ClassLoader.getSystemResource("gameover01.wav").toString());
 	private static Thread t;
-	public Button mainmenuButton;
-	private boolean isDone;
 	
 	public GameOverScreen() {
-
+		
 	}
 	public static void draw(GraphicsContext gc) {
 		gc.drawImage(background, 0, 0);
@@ -44,12 +42,9 @@ public class GameOverScreen {
 		gc.setLineWidth(2);
 		gc.fillText("GAME OVER!", 150, 100);
 		gc.setFont(mainFont);
-//		gc.fillText("Score : ", 300, 250);
 		
 	}
 	public static void startanimation(GraphicsContext gc) {
 		draw(gc);
 	}
-	
-	
 }

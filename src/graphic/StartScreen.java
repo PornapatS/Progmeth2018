@@ -16,18 +16,16 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import logic.Buttons;
 
 public class StartScreen {
 	private static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 20);
 	private static final Font titleFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 100);;
 	private Stage primaryStage;
 	private Canvas canvas;
-	private HBox menu;
 	private GraphicsContext gc;
 	private boolean isSoundOn = false;
-	private boolean isGameStart = false;
-	public Button startButton;
-	public Button exitButton;
+	public Buttons menu;
 	public Image background;
 	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
 	public AudioClip buttonSound = new AudioClip(ClassLoader.getSystemResource("buttonsound.wav").toString());
@@ -38,6 +36,7 @@ public class StartScreen {
 		this.primaryStage = primaryStage;
 		canvas = new Canvas(800, 600);
 		gc = canvas.getGraphicsContext2D();
+		menu = new Buttons("Start");
 		setupButton();
 		gameSound.play();
 		isSoundOn = true;
@@ -45,13 +44,7 @@ public class StartScreen {
 	public void draw(GraphicsContext gc) {
 		StackPane root = new StackPane();
 		root.setPrefSize(800, 600);
-		
-		menu = new HBox(50);
-		menu.setPrefWidth(800);
-		menu.setPrefHeight(100);
-		menu.setAlignment(Pos.BOTTOM_CENTER);
 		root.getChildren().add(canvas);
-		root.getChildren().add(menu);
 		canvas.requestFocus();
 		
 		Scene scene = new Scene(root);
@@ -65,7 +58,7 @@ public class StartScreen {
 				setBackground();
 				if(!isSoundOn) gameSound.play();
 				if(timer == 50) {
-					menu.getChildren().addAll(startButton, exitButton);
+					root.getChildren().add(menu);
 				}
 				timer++;
 			}
@@ -82,18 +75,10 @@ public class StartScreen {
 		gc.fillText("A L I E N", 250, 500);
 	}
 	public void setupButton() {
-		startButton = new Button("Start");
-		exitButton = new Button("Exit");
-		startButton.setPrefSize(100, 45);
-		exitButton.setPrefSize(100, 45);
-		startButton.setFont(mainFont);
-		exitButton.setFont(mainFont);
-
-		startButton.setOnAction(new EventHandler<ActionEvent>() {
+		menu.startButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				isGameStart = true;
 				GameWindow game = new GameWindow(primaryStage);
 				game.draw();
 				startscreenAnimation.stop();
@@ -101,13 +86,7 @@ public class StartScreen {
 				isSoundOn = false;
 			}
 		});
-		exitButton.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				Platform.exit();
-			}
-		});
+		menu.setupExitButton();
 	}
 	public void startanimation() {
 		draw(gc);
