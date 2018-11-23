@@ -7,12 +7,10 @@ import character.AlienC;
 import character.Boss;
 import character.Player;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
@@ -24,9 +22,7 @@ public class GameWindow extends Canvas{
 	private Scene scene;
 	private Stage primaryStage;
 	
-	private int frame = 0;
-	
-	private boolean isStageOn = false;
+	private boolean isStageOn = true;
 	private boolean isOver = false;
 	private boolean isLvSix = false;
 	private boolean isAddedBoss = false;
@@ -60,31 +56,35 @@ public class GameWindow extends Canvas{
 		this.primaryStage.setScene(scene);
 		gameSound.play();
 	}
-	public void addAlienA() {
-		alienA = new AlienA();
-	}
-	public void addAlienB() {
-		alienB = new AlienB();
-	}
-	public void addAlienC() {
-		alienC = new AlienC();
-	}
-	public void addBoss() {
-		boss = new Boss();
-		isAddedBoss = true;
-	}
 	public void draw() {
 		addMove(gc);
+		gameScreen.draw(gc);		
 		windowAnimation = new AnimationTimer() {
-			
 			@Override
 			public void handle(long now) {
-				updateLevel();
-				updateLife();
-				updateScore();
-				gameScreen.draw(gc);
-				frame = 0;
-				isGameOver();
+				
+				Thread updatethread = new Thread(new Runnable() {					
+					@Override
+					public void run() {
+						while(!isOver || isStageOn) {
+							player.addScore(10);
+							player.addLife(-1);
+							updateData();
+							//updateallPos();
+							if(!isOver) {
+								gameScreen.draw(gc);
+							} else {
+								changeScreen();								
+							}
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				});
+				updatethread.start();
 			}
 		};
 		windowAnimation.start();
@@ -108,28 +108,44 @@ public class GameWindow extends Canvas{
 			}
 		});
 	}
-	public void updateScore() {
-		gameScreen.setScore(player.getScore());
+	public void addAlienA() {
+		alienA = new AlienA();
 	}
-	public void updateLevel() {
-		gameScreen.setLevel(player.getLevel());
+	public void addAlienB() {
+		alienB = new AlienB();
 	}
-	public void updateLife() {
-		gameScreen.setLife(player.getLife());
+	public void addAlienC() {
+		alienC = new AlienC();
 	}
-	public void isGameOver() {
-		if(player.getLife() <= 0) {
-			windowAnimation.stop();
+	public void addBoss() {
+		boss = new Boss();
+		isAddedBoss = true;
+	}
+	public void changeScreen() {
+		if(isOver) {
+			isStageOn = false;
 			gameSound.stop();
 			bossSound.stop();
-			GameOverScreen.startanimation(gc);
+			windowAnimation.stop();
+			if(player.getLife() == 0) {
+				GameOverScreen.startanimation(gc);
+			}
+			if(isAddedBoss && !boss.isAlive()) {
+				WinnerScreen.startanimation(gc, player.getScore());
+			}			
+		}
+	}
+	public void updateData() {
+		gameScreen.setScore(player.getScore());
+		gameScreen.setLevel(player.getLevel());
+		gameScreen.setLife(player.getLife());
+		if(player.getLife() <= 0 || (isAddedBoss && !boss.isAlive())) {
 			isOver = true;
 		}
-		if(isAddedBoss && !boss.isAlive()) {
-			windowAnimation.stop();
-			gameSound.stop();
-			bossSound.stop();
-			WinnerScreen.startanimation(gc, player.getScore());
-		}
+	}
+	public void updateallPos() {
+		player.updatePos();
+		
+		if(isLvSix) boss.updatePos();
 	}
 }

@@ -31,6 +31,7 @@ public abstract class Position {
 		
 	}
 	public void updatePos() {
+		
 		// TODO Auto-generated method stub
 		
 	}

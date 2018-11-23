@@ -31,7 +31,6 @@ public class GameOverScreen {
 				setUpGameover(gc);
 				try {
 					Thread.sleep(1000);
-					System.out.println("DONE!");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}				

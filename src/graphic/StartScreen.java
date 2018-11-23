@@ -62,7 +62,6 @@ public class StartScreen {
 		startscreenAnimation = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				System.out.println(timer);
 				setBackground();
 				if(!isSoundOn) gameSound.play();
 				if(timer == 50) {
@@ -89,6 +88,7 @@ public class StartScreen {
 		exitButton.setPrefSize(100, 45);
 		startButton.setFont(mainFont);
 		exitButton.setFont(mainFont);
+
 		startButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override

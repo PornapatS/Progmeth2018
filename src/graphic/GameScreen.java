@@ -16,6 +16,7 @@ public class GameScreen implements IRenderable {
 	public Image lifeImage = new Image("life.png");
 	
 	public GameScreen() {
+	
 	}
 	public void draw(GraphicsContext gc) {
 		gc.drawImage(background, 0, 0);
@@ -38,5 +39,4 @@ public class GameScreen implements IRenderable {
 	public void setLife(int life) {
 		this.life = life;
 	}
-	
 }

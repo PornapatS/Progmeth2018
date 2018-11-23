@@ -17,7 +17,7 @@ public class Player extends Position {
 	private String control;
 
 	public Image playerImage = new Image("player.png");
-	public Image barrierImage = new Image("barrier.png");
+	//public Image barrierImage = new Image("barrier.png");
 	
 	public AudioClip receiveItemSound = new AudioClip(ClassLoader.getSystemResource("receiveitem.wav").toString());
 	//TODO public AudioClip collideSound = new AudioClip(ClassLoader.getSystemResource("animesound.wav").toString());
@@ -28,7 +28,7 @@ public class Player extends Position {
 	
 	@Override
 	public void draw(GraphicsContext gc) {
-		if (isBarrierOn) gc.drawImage(barrierImage, x, y);
+	//	if (isBarrierOn) gc.drawImage(barrierImage, x, y);
 		gc.drawImage(playerImage, x, y);
 	}
 	
