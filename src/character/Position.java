@@ -26,9 +26,8 @@ public abstract class Position {
 	public void draw(GraphicsContext gc) {
 		gc.drawImage(image, x, y);
 	}
-	public void updatePos() {
-		// TODO Auto-generated method stub
-		
+	public void updatePos(GraphicsContext gc) {
+		draw(gc);
 	}
 	public boolean isShow() {
 		return true;
@@ -41,6 +40,9 @@ public abstract class Position {
 	}
 	public int getScore() {
 		return score;
+	}
+	public String getControl() {
+		return control;
 	}
 	
 }

@@ -22,11 +22,11 @@ public class GameOverScreen {
 	public static void draw(GraphicsContext gc) {
 		gc.drawImage(background, 0, 0);
 		gameoverSound.play();
+		setUpGameover(gc);
 		t = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				setUpGameover(gc);
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

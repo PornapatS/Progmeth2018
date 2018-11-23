@@ -31,7 +31,7 @@ public class GameWindow extends Canvas{
 	private boolean isAddedBoss = false;
 		
 	private Player player;
-	private Position boss = new Boss();
+	private Position boss;
 	private Position alienA;
 	private Position alienB;	
 	private Position alienC;
@@ -52,6 +52,7 @@ public class GameWindow extends Canvas{
 		// TODO Fill code!
 		
 		player = new Player();
+		player.draw(gc);
 		gameScreen = new GameScreen();
 		
 		scene = new Scene(root);
@@ -72,17 +73,15 @@ public class GameWindow extends Canvas{
 					public void run() {
 						while(!isOver || isStageOn) {
 							updateData();
-							player.addScore(10);
-							player.decreaseLife();
-							// TODO updateallPos();
 							if(!isOver) {
 								gameScreen.draw(gc);
+								updateallPos(gc);
 							} else {
+								System.out.println(player.getControl().length());
 								changeScreen();								
 							}
-							System.out.println("hello");
 							try {
-								Thread.sleep(500);
+								Thread.sleep(1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
@@ -112,16 +111,26 @@ public class GameWindow extends Canvas{
 	}
 	public void addAlienA() {
 		alienA = new AlienA();
+		characters.add(alienA);
+		alienA.draw(gc);
 	}
 	public void addAlienB() {
 		alienB = new AlienB();
+		characters.add(alienB);
+		alienB.draw(gc);
 	}
 	public void addAlienC() {
 		alienC = new AlienC();
+		characters.add(alienC);
+		alienC.draw(gc);
 	}
 	public void addBoss() {
 		boss = new Boss();
+		characters.add(boss);
 		isAddedBoss = true;
+		gameSound.stop();
+		bossSound.play();
+		boss.draw(gc);
 	}
 	public void changeScreen() {
 		isStageOn = false;
@@ -142,11 +151,15 @@ public class GameWindow extends Canvas{
 		if(!player.isAlive() || (isAddedBoss && !boss.isAlive())) {
 			isOver = true;
 		}
-	}
-	public void updateallPos() {
-		player.updatePos();
-		for(Position c : characters) {
-			c.updatePos();
+		if(player.getLevel() == 6) {
+			isLvSix = true;
+			addBoss();
 		}
+	}
+	public void updateallPos(GraphicsContext gc) {
+		player.updatePos(gc);
+//		for(Position c : characters) {
+//			c.updatePos(gc);
+//		}
 	}
 }

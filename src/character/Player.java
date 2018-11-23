@@ -25,7 +25,7 @@ public class Player extends Position {
 	}
 		
 	@Override
-	public void updatePos() {
+	public void updatePos(GraphicsContext gc) {
 		if (control.contains("a")) {
 			if (x >= 80) {
 				x -= speed;
@@ -46,6 +46,7 @@ public class Player extends Position {
 				y += speed;
 			}
 		}
+		draw(gc);
 	}
 //	public boolean isAttacked(double x,double y) {
 //		if (Math.abs(this.x - x) <= 75 && Math.abs(this.y - y) <= 54) {
