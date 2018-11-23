@@ -1,11 +1,13 @@
 package graphic;
 
-import character.Alien;
+import java.util.ArrayList;
+
 import character.AlienA;
 import character.AlienB;
 import character.AlienC;
 import character.Boss;
 import character.Player;
+import character.Position;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -27,12 +29,13 @@ public class GameWindow extends Canvas{
 	private boolean isOver = false;
 	private boolean isLvSix = false;
 	private boolean isAddedBoss = false;
-
+		
 	private Player player;
-	private Boss boss = new Boss();
-	private Alien alienA;
-	private Alien alienB;	
-	private Alien alienC;
+	private Position boss = new Boss();
+	private Position alienA;
+	private Position alienB;	
+	private Position alienC;
+	private ArrayList<Position> characters;
 	
 	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
 	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
@@ -69,15 +72,17 @@ public class GameWindow extends Canvas{
 					public void run() {
 						while(!isOver || isStageOn) {
 							updateData();
+							player.addScore(10);
+							player.decreaseLife();
 							// TODO updateallPos();
 							if(!isOver) {
 								gameScreen.draw(gc);
 							} else {
 								changeScreen();								
 							}
+							System.out.println("hello");
 							try {
 								Thread.sleep(500);
-								isAddedBoss = true;
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
@@ -92,19 +97,16 @@ public class GameWindow extends Canvas{
 	public void addMove(GraphicsContext gc) {
 		this.setOnKeyPressed((KeyEvent) -> {
 			if (KeyEvent.getCode() == KeyCode.LEFT) {
-				// TODO Fill code!
+				player.moveLeft();
 			}
 			if (KeyEvent.getCode() == KeyCode.RIGHT) {
-				// TODO Fill code!
+				player.moveRight();
 			}
 			if (KeyEvent.getCode() == KeyCode.UP) {
-				// TODO Fill code!
+				player.moveUp();
 			}
 			if (KeyEvent.getCode() == KeyCode.DOWN ) {
-				// TODO Fill code!
-			}
-			if (KeyEvent.getCode() == KeyCode.SPACE) {
-				// TODO Fill code!
+				player.moveDown();
 			}
 		});
 	}
@@ -122,30 +124,29 @@ public class GameWindow extends Canvas{
 		isAddedBoss = true;
 	}
 	public void changeScreen() {
-		if(isOver) {
-			isStageOn = false;
-			gameSound.stop();
-			bossSound.stop();
-			windowAnimation.stop();
-			if(player.getLife() == 0) {
-				GameOverScreen.startanimation(gc);
-			}
-			if(isAddedBoss && !boss.isAlive()) {
-				WinnerScreen.startanimation(gc, player.getScore());
-			}			
+		isStageOn = false;
+		gameSound.stop();
+		bossSound.stop();
+		windowAnimation.stop();
+		if(!player.isAlive()) {
+			GameOverScreen.startanimation(gc);
 		}
+		if(isAddedBoss && !boss.isAlive()) {
+			WinnerScreen.startanimation(gc, player.getScore());
+		}			
 	}
 	public void updateData() {
 		gameScreen.setScore(player.getScore());
 		gameScreen.setLevel(player.getLevel());
 		gameScreen.setLife(player.getLife());
-		if(player.getLife() <= 0 || (isAddedBoss && !boss.isAlive())) {
+		if(!player.isAlive() || (isAddedBoss && !boss.isAlive())) {
 			isOver = true;
 		}
 	}
 	public void updateallPos() {
 		player.updatePos();
-		
-		if(isLvSix) boss.updatePos();
+		for(Position c : characters) {
+			c.updatePos();
+		}
 	}
 }

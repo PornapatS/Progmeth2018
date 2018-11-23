@@ -6,10 +6,7 @@ public class Boss extends Position {
 	private int speed = 10;
 	
 	public Boss() {
-
-	}
-	public boolean isAlive() {
-		return life > 0;
+		super(1.0, 1.0);
 	}
 	
 }

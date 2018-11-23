@@ -4,6 +4,7 @@ import graphic.GameWindow;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -16,10 +17,11 @@ public class Buttons extends HBox{
 	public Button exitButton;
 	
 	public Buttons(String name) {
-		setSpacing(50);
+		setSpacing(40);
 		setPrefWidth(800);
 		setPrefHeight(100);
 		setAlignment(Pos.BOTTOM_CENTER);
+		setPadding(new Insets(10, 10, 10, 10));
 		
 		startButton = new Button(name);
 		exitButton = new Button("Exit");		
