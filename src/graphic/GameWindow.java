@@ -68,11 +68,8 @@ public class GameWindow extends Canvas{
 					@Override
 					public void run() {
 						while(!isOver || isStageOn) {
-							player.addScore(10);
-//							player.addLife(-1);
-// set boss is dead. (life = 0)
 							updateData();
-							//updateallPos();
+							// TODO updateallPos();
 							if(!isOver) {
 								gameScreen.draw(gc);
 							} else {

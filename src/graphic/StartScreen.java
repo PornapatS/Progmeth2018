@@ -79,6 +79,7 @@ public class StartScreen {
 			
 			@Override
 			public void handle(ActionEvent event) {
+				buttonSound.play();
 				GameWindow game = new GameWindow(primaryStage);
 				game.draw();
 				startscreenAnimation.stop();
