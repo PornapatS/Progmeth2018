@@ -19,10 +19,14 @@ public class GameOverScreen {
 	public GameOverScreen() {
 		
 	}
-	public static void draw(GraphicsContext gc) {
+	public static void draw(GraphicsContext gc, int score) {
 		gc.drawImage(background, 0, 0);
-		gameoverSound.play();
-		setUpGameover(gc);
+		gc.setFont(gameoverFont);
+		gc.setFill(Color.WHITE);
+		gc.setLineWidth(2);
+		gc.fillText("GAME OVER!", 150, 100);
+		gc.setFont(mainFont);
+		gc.fillText("SCORE : " + score, 300, 150);
 		t = new Thread(new Runnable() {
 			
 			@Override
@@ -36,15 +40,7 @@ public class GameOverScreen {
 		});
 		t.start();
 	}
-	public static void setUpGameover(GraphicsContext gc) {
-		gc.setFont(gameoverFont);
-		gc.setFill(Color.WHITE);
-		gc.setLineWidth(2);
-		gc.fillText("GAME OVER!", 150, 100);
-		gc.setFont(mainFont);
-		
-	}
-	public static void startanimation(GraphicsContext gc) {
-		draw(gc);
+	public static void startanimation(GraphicsContext gc, int score) {
+		draw(gc, score);
 	}
 }

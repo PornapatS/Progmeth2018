@@ -46,6 +46,7 @@ public class Player extends Position {
 				y += speed;
 			}
 		}
+		control = "";
 		draw(gc);
 	}
 //	public boolean isAttacked(double x,double y) {

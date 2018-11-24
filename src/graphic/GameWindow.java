@@ -9,10 +9,12 @@ import character.Boss;
 import character.Player;
 import character.Position;
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
@@ -35,7 +37,7 @@ public class GameWindow extends Canvas{
 	private Position alienA;
 	private Position alienB;	
 	private Position alienC;
-	private ArrayList<Position> characters;
+	private ArrayList<Position> characters = new ArrayList<>();
 	
 	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
 	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
@@ -77,7 +79,6 @@ public class GameWindow extends Canvas{
 								gameScreen.draw(gc);
 								updateallPos(gc);
 							} else {
-								System.out.println(player.getControl().length());
 								changeScreen();								
 							}
 							try {
@@ -94,7 +95,7 @@ public class GameWindow extends Canvas{
 		windowAnimation.start();
 	}
 	public void addMove(GraphicsContext gc) {
-		this.setOnKeyPressed((KeyEvent) -> {
+		scene.setOnKeyPressed((KeyEvent) -> {
 			if (KeyEvent.getCode() == KeyCode.LEFT) {
 				player.moveLeft();
 			}
@@ -106,6 +107,9 @@ public class GameWindow extends Canvas{
 			}
 			if (KeyEvent.getCode() == KeyCode.DOWN ) {
 				player.moveDown();
+			}
+			if (KeyEvent.getCode() == KeyCode.SPACE ) {
+				isOver = true;
 			}
 		});
 	}
@@ -138,7 +142,7 @@ public class GameWindow extends Canvas{
 		bossSound.stop();
 		windowAnimation.stop();
 		if(!player.isAlive()) {
-			GameOverScreen.startanimation(gc);
+			GameOverScreen.startanimation(gc, player.getScore());
 		}
 		if(isAddedBoss && !boss.isAlive()) {
 			WinnerScreen.startanimation(gc, player.getScore());
@@ -156,10 +160,15 @@ public class GameWindow extends Canvas{
 			addBoss();
 		}
 	}
-	public void updateallPos(GraphicsContext gc) {
+	public void updateallPos(GraphicsContext gcReal) {
+		GraphicsContext gc = getGraphicsContext2D();
 		player.updatePos(gc);
-//		for(Position c : characters) {
-//			c.updatePos(gc);
-//		}
+
+		for(int i = 0; i < characters.size(); i++) {
+			Position c = characters.get(i);
+			c.updatePos(gc);
+			if (!c.isVisible()) characters.remove(i);
+		}
+		gcReal = gc;
 	}
 }
