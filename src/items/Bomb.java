@@ -5,11 +5,11 @@ import character.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Heart extends Item {
+public class Bomb extends Item {
 
-	public Heart() {
+	public Bomb() {
 		super();
-		this.itemImage = new Image("firstaidkid.png");
+		this.itemImage = new Image("bomb.png");
 	}
 	
 	@Override
@@ -19,7 +19,7 @@ public class Heart extends Item {
 	
 	@Override
 	public void effect(Player player) {
-		player.receiveItem(this);
+		player.setlife(0);
 	}
 
 }

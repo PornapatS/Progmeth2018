@@ -5,6 +5,7 @@ import items.Heart;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
+import sharedObject.RenderableHolder;
 
 public class Player extends Position {
 	
@@ -49,31 +50,26 @@ public class Player extends Position {
 		control = "";
 		draw(gc);
 	}
-//	public boolean isAttacked(double x,double y) {
-//		if (Math.abs(this.x - x) <= 75 && Math.abs(this.y - y) <= 54) {
-//			if (isBarrierOn) {
-//				barrierCount--;
-//				if (barrierCount == 0) {
-//					isBarrierOn = false;
-//				}
-//			} else {
-//				life--;
-//				//TODO insert music   collidesound.play();
-//			}
-//			return true;
-//		}
-//		return false;
-//	}
-//	public Bullet attack(char c) {
-//		Bullet bullet = new Bullet(x,y,c);
-//		RenderableHolder.getinstance().add(bullet);
-//		bullet.setFromPlayer(true);
-//		bullet.setBullet();
-//		return bullet;
-//	}
-//	public void setControl(String control) {
-//		this.control = control;
-//	}
+	public Bullet attack(char c) {
+		Bullet bullet = new Bullet(x,y,c);
+		bullet.setFromBoss(false);
+		bullet.setBullet();
+//		shared.RenderableHolder.getInstance().add(bullet);
+		return bullet;
+	}
+	
+	public boolean isAttacked(double x,double y) {
+		if (Math.abs(this.x-x)<=75 && Math.abs(this.y-y)<=54) {
+			decreaseLife();
+			return true;
+		}
+		return false;
+	}
+	
+	public void setControl(String control) {
+		this.control = control;
+	}
+
 	public void receiveItem(Object o) {
 		receiveItemSound.play();
 		if(o instanceof Barrier) {
@@ -107,6 +103,12 @@ public class Player extends Position {
 		if(life == 0) {
 			isAlive = false;
 		}
+	}
+	public void setlife(int life) {
+		this.life = life;
+		if(life == 0) {
+			isAlive = false;
+		}		
 	}
 	public int getLevel() {
 		return level;
