@@ -2,6 +2,7 @@ package graphic;
 
 import java.util.ArrayList;
 
+import character.Alien;
 import character.AlienA;
 import character.AlienB;
 import character.AlienC;
@@ -114,17 +115,17 @@ public class GameWindow extends Canvas{
 		});
 	}
 	public void addAlienA() {
-		alienA = new AlienA();
+		alienA = new AlienA(player);
 		characters.add(alienA);
 		alienA.draw(gc);
 	}
 	public void addAlienB() {
-		alienB = new AlienB();
+		alienB = new AlienB(player);
 		characters.add(alienB);
 		alienB.draw(gc);
 	}
 	public void addAlienC() {
-		alienC = new AlienC();
+		alienC = new AlienC(player);
 		characters.add(alienC);
 		alienC.draw(gc);
 	}

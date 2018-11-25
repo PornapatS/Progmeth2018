@@ -6,18 +6,20 @@ import javafx.scene.image.Image;
 
 public class Barrier extends Item {
 	
+	public Image barrierPic = new Image("barria.png");
+
 	public Barrier() {
 		super();
-		this.itemImage = new Image("barria.png");
 	}
 	
 	@Override
 	public void draw(GraphicsContext gc) {
-		gc.drawImage(this.itemImage, x, y);
+		gc.drawImage(barrierPic,x,y);
 	}
 	
 	@Override
 	public void effect(Player player) {
-		player.receiveItem(this);
+		player.getBarrier();
 	}
+
 }
