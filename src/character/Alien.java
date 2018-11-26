@@ -2,15 +2,17 @@ package character;
 
 import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public abstract class Alien extends Position {
 	
 	private int way;
 	private static double speed = 1 ;
 	private Random rand = new Random();
-	private boolean isShow = true;
 	private Player player;
-
+	public int score;
+	public Image alienPic;
+	
 	public Alien(Player player) {
 		super(0,0); // have to insert it due to error!! 
 		double x = 0;
@@ -38,20 +40,11 @@ public abstract class Alien extends Position {
 	
 	@Override
 	public abstract void draw(GraphicsContext gc);
-	
-	@Override
-	public boolean isShow() {
-		return isShow;
-	}
-	
-	public void setShow(boolean isShow) {
-		this.isShow = isShow;
-	}
-	
+		
 	public void updatePos() {
 		y += getSpeed();
-		if (player.isAttacked(x, y)) {
-			isShow = false;
+		if (player.isAttacked(x, y) || y > 600) {
+			setShow(false);
 		}
 	}
 	
@@ -64,7 +57,9 @@ public abstract class Alien extends Position {
 	public static void setSpeed(double speed) {
 		Alien.speed = speed;
 	}
-	
-	public abstract int getScore();
+
+	public int getScore() {
+		return score;
+	}
 
 }

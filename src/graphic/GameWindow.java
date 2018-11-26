@@ -1,24 +1,21 @@
 package graphic;
 
-import java.util.ArrayList;
-
 import character.Alien;
 import character.AlienA;
 import character.AlienB;
 import character.AlienC;
 import character.Boss;
 import character.Player;
-import character.Position;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import sharedObject.RenderableHolder;
 
 public class GameWindow extends Canvas{
 	private AnimationTimer windowAnimation;
@@ -28,20 +25,21 @@ public class GameWindow extends Canvas{
 	private Scene scene;
 	private Stage primaryStage;
 	
+	private String control = "";
+	private int frame = 0;	
 	private boolean isStageOn = true;
 	private boolean isOver = false;
 	private boolean isLvSix = false;
 	private boolean isAddedBoss = false;
 		
 	private Player player;
-	private Position boss;
-	private Position alienA;
-	private Position alienB;	
-	private Position alienC;
-	private ArrayList<Position> characters = new ArrayList<>();
+	private Boss boss;
+	private Alien alienA;
+	private Alien alienB;	
+	private Alien alienC;
 	
 	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
-	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
+	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("winner.wav").toString());
 	
 	
 	public GameWindow(Stage primaryStage) {
@@ -55,7 +53,7 @@ public class GameWindow extends Canvas{
 		// TODO Fill code!
 		
 		player = new Player();
-		player.draw(gc);
+		RenderableHolder.getInstance().add(player);
 		gameScreen = new GameScreen();
 		
 		scene = new Scene(root);
@@ -70,27 +68,10 @@ public class GameWindow extends Canvas{
 		windowAnimation = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				
-				Thread updatethread = new Thread(new Runnable() {					
-					@Override
-					public void run() {
-						while(!isOver || isStageOn) {
-							updateData();
-							if(!isOver) {
-								gameScreen.draw(gc);
-								updateallPos(gc);
-							} else {
-								changeScreen();								
-							}
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				});
-				updatethread.start();
+				updateDetail();
+				updateState();
+				updateSong();
+				isGameEnd();
 			}
 		};
 		windowAnimation.start();
@@ -98,78 +79,133 @@ public class GameWindow extends Canvas{
 	public void addMove(GraphicsContext gc) {
 		scene.setOnKeyPressed((KeyEvent) -> {
 			if (KeyEvent.getCode() == KeyCode.LEFT) {
-				player.moveLeft();
+				control += "a";
 			}
 			if (KeyEvent.getCode() == KeyCode.RIGHT) {
-				player.moveRight();
+				control += "d";
 			}
 			if (KeyEvent.getCode() == KeyCode.UP) {
-				player.moveUp();
+				control += "w";
 			}
 			if (KeyEvent.getCode() == KeyCode.DOWN ) {
-				player.moveDown();
+				control += "s";
 			}
-			if (KeyEvent.getCode() == KeyCode.SPACE ) {
-				isOver = true;
+			if (KeyEvent.getCode() == KeyCode.ESCAPE ) {
+				Platform.exit();
+			}
+
+		});
+		this.setOnKeyReleased((KeyEvent) -> {
+			if (KeyEvent.getCode() == KeyCode.LEFT) {
+				control = control.replace("a","");
+				RenderableHolder.getInstance().updatePos(control, player);
+			}
+			if (KeyEvent.getCode() == KeyCode.RIGHT) {
+				control = control.replace("d", "");
+				RenderableHolder.getInstance().updatePos(control, player);
+			}
+			if (KeyEvent.getCode() == KeyCode.UP) {
+				control = control.replace("w", "");
+				RenderableHolder.getInstance().updatePos(control, player);
+			}
+			if (KeyEvent.getCode() == KeyCode.DOWN ) {
+				control = control.replace("s", "");
+				RenderableHolder.getInstance().updatePos(control, player);
 			}
 		});
 	}
 	public void addAlienA() {
 		alienA = new AlienA(player);
-		characters.add(alienA);
-		alienA.draw(gc);
+		RenderableHolder.getInstance().add(alienA);
 	}
 	public void addAlienB() {
 		alienB = new AlienB(player);
-		characters.add(alienB);
-		alienB.draw(gc);
+		RenderableHolder.getInstance().add(alienB);
 	}
 	public void addAlienC() {
 		alienC = new AlienC(player);
-		characters.add(alienC);
-		alienC.draw(gc);
+		RenderableHolder.getInstance().add(alienC);
 	}
 	public void addBoss() {
 		boss = new Boss();
-		characters.add(boss);
 		isAddedBoss = true;
-		gameSound.stop();
-		bossSound.play();
-		boss.draw(gc);
+		RenderableHolder.getInstance().add(boss);
 	}
-	public void changeScreen() {
-		isStageOn = false;
-		gameSound.stop();
-		bossSound.stop();
-		windowAnimation.stop();
-		if(!player.isAlive()) {
-			GameOverScreen.startanimation(gc, player.getScore());
+	public void addItem() {
+		//TODO
+	}
+	private void updateSong() {
+		if(!isOver && !isAddedBoss) {
+			if(!gameSound.isPlaying()) gameSound.play();
 		}
-		if(isAddedBoss && !boss.isAlive()) {
-			WinnerScreen.startanimation(gc, player.getScore());
-		}			
+		if(!isOver && isAddedBoss && !boss.isDead()) {
+			if(!bossSound.isPlaying()) bossSound.play();
+		}
+	}
+
+	private void updateState() {
+		// TODO Auto-generated method stub
+		frame++;
+		if ((frame % 600) < 500) {
+			if(frame % 10 == 0) {
+				fire();
+			}
+			if(frame % 100 == 0) {
+				addAlienA();
+			}
+			if(frame % 500 == 0) {
+				player.levelUp();
+			}
+			if(frame % 500 == 0) {
+				addItem();
+			}
+		}
+		if(!isOver) {
+			if(player.getLevel() == 6 && !isAddedBoss) {
+				addBoss();
+				isLvSix = true;
+				gameSound.stop();
+				bossSound.play();
+			}
+		}		
+	}
+
+	private void updateDetail() {
+		RenderableHolder.getInstance().remove();
+		RenderableHolder.getInstance().Collision(player);
+		if(isAddedBoss) {
+			RenderableHolder.getInstance().Collision(boss);
+		}
+		updateData();			
+		this.gameScreen.draw(gc);
+		RenderableHolder.getInstance().updatePos(control, player);
+		this.control = "";
+		RenderableHolder.getInstance().draw(gc);
+		
+	}
+	public void isGameEnd() {
+		if(isOver) {
+			gameSound.stop();
+			bossSound.stop();
+			windowAnimation.stop();
+			if(player.isDead()) {
+				GameOverScreen.startanimation(gc, player.getScore());
+			}
+			if(isAddedBoss && boss.isDead()) {
+				WinnerScreen.startanimation(gc, player.getScore());
+			}
+		}
 	}
 	public void updateData() {
 		gameScreen.setScore(player.getScore());
 		gameScreen.setLevel(player.getLevel());
 		gameScreen.setLife(player.getLife());
-		if(!player.isAlive() || (isAddedBoss && !boss.isAlive())) {
+		if(player.isDead() || (isAddedBoss && boss.isDead())) {
 			isOver = true;
 		}
-		if(player.getLevel() == 6) {
-			isLvSix = true;
-			addBoss();
-		}
 	}
-	public void updateallPos(GraphicsContext gcReal) {
-		GraphicsContext gc = getGraphicsContext2D();
-		player.updatePos(gc);
+	public void fire() {
+		player.attack('w');
+	}
 
-		for(int i = 0; i < characters.size(); i++) {
-			Position c = characters.get(i);
-			c.updatePos(gc);
-			if (!c.isVisible()) characters.remove(i);
-		}
-		gcReal = gc;
-	}
 }

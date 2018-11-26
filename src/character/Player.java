@@ -2,20 +2,22 @@ package character;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import sharedObject.RenderableHolder;
 
 public class Player extends Position {
 	
 	private int level = 1;
-	private int score = 0;
 	private int life = 10;
-	private int speed = 2;
-	private boolean isBarrierOn = false;
+	private int score = 0;
+	private int speed = 5;
 	private int barrierCount;
-	private String control;
+	private boolean isBarrierOn = false;
 	private boolean isBoss = false;
-	public Image playerPic = new Image("player.png");
+	private String control;
+	public Image ownerPic = new Image("player.png");
 	public Image barrierPic = new Image("barrier.png");
+	public AudioClip levelupSound = new AudioClip(ClassLoader.getSystemResource("levelup.wav").toString());
 	
 	public Player() {
 		super(400,500);
@@ -23,55 +25,66 @@ public class Player extends Position {
 	
 	@Override
 	public void draw(GraphicsContext gc) {
-		if (isBarrierOn) gc.drawImage(barrierPic,x,y);
-		gc.drawImage(playerPic,x,y);
+		gc.drawImage(ownerPic, x, y);
+		if (isBarrierOn) {
+			gc.drawImage(barrierPic, x, y);
+		}
 	}
 	
 	@Override
 	public void updatePos() {
 		if (control.contains("a")) {
-			if (x>=80) {
-				x-=speed;
+			if (x >= 80) {
+				x -= speed;
 			}
 		}
 		if (control.contains("d")) {
-			if (x+80<=800) {
-				x+=speed; 	
+			if (x + 80 <= 800) {
+				x += speed; 	
 			}
 		}
 		if (control.contains("w")) {
-			if (y>=70) {
-				y-=speed;
+			if (y >= 70) {
+				y -= speed;
 			}
 		}
 		if (control.contains("s")) {
-			if (y+65<=600) {
-				y+=speed;
+			if (y + 65 <= 600) {
+				y += speed;
 			}
 		}
 	}
 	
-	@Override
-	public boolean isShow() {
-		return true;
+	public Bullet attack(char c) {
+		Bullet bullet = new Bullet(x + 70, y - 20, c);
+		RenderableHolder.getInstance().add(bullet);
+		bullet.setBullet();
+		return bullet;
 	}
 	
+	public boolean isAttacked(double x,double y) {
+		if (Math.abs(this.x-x) <= 75 && Math.abs(this.y-y) <= 54) {
+			decreaseLife();
+			return true;
+		}
+		return false;
+	}
+		
 	public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
-		this.level = level;
+	public void levelUp() {
+		level++;
+		levelupSound.play();
 	}
 
 	public int getScore() {
 		return score;
 	}
-
-	public void setScore(int score) {
-		this.score = score;
+	public void addScore(int score) {
+		this.score += score;
 	}
-
 	public int getLife() {
 		return life;
 	}
@@ -94,7 +107,7 @@ public class Player extends Position {
 	}
 	
 	public boolean isDead() {
-		if (life<=0) return true;
+		if (life <= 0) return true;
 		return false;
 	}
 	
@@ -113,22 +126,6 @@ public class Player extends Position {
 
 	public void setBoss(boolean isBoss) {
 		this.isBoss = isBoss;
-	}
-
-	public Bullet attack(char c) {
-		Bullet bullet = new Bullet(x,y,c);
-		RenderableHolder.getInstance().add(bullet);
-		if (isBoss) bullet.setFromBoss(true);
-		bullet.setBullet();
-		return bullet;
-	}
-	
-	public boolean isAttacked(double x,double y) {
-		if (Math.abs(this.x-x)<=75 && Math.abs(this.y-y)<=54) {
-			decreaseLife();
-			return true;
-		}
-		return false;
 	}
 	
 	public void setControl(String control) {

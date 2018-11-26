@@ -6,6 +6,7 @@ public abstract class Position implements IRenderable {
 	
 	protected double x;
 	protected double y;
+	private boolean isShow = true;
 	
 	public Position(double x,double y) {
 		this.x = x;
@@ -28,6 +29,14 @@ public abstract class Position implements IRenderable {
 		this.y = y;
 	}
 	
+	public boolean isShow() {
+		return isShow;
+	}
+
+	public void setShow(boolean isShow) {
+		this.isShow = isShow;
+	}
+
 	public abstract void updatePos();
 
 }

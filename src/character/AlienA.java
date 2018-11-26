@@ -4,18 +4,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class AlienA extends Alien {
-	
-	public int score = 5;
-	public Image alienAPic = new Image("alienA.png");
 
 	public AlienA(Player player) {
 		super(player);
 		Alien.setSpeed(1);
+		this.score = 5;
+		this.alienPic = new Image("alienA.png");
 	}
 	
 	@Override
 	public void draw(GraphicsContext gc) {
-		gc.drawImage(alienAPic,x,y);
+		gc.drawImage(this.alienPic, x, y);
 	}
 	
 	@Override
@@ -26,9 +25,4 @@ public class AlienA extends Alien {
 		}
 		return false;
 	}
-	
-	public int getScore() {
-		return score;
-	}
-
 }

@@ -6,15 +6,9 @@ import javafx.scene.image.Image;
 
 public class Heart extends Item {
 	
-	public Image heartPic = new Image("firstaidkid.png");
-
 	public Heart() {
 		super();
-	}
-	
-	@Override
-	public void draw(GraphicsContext gc) {
-		gc.drawImage(heartPic,x,y);
+		this.itemImage = new Image("firstaidkid.png");
 	}
 	
 	@Override

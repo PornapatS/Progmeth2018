@@ -6,15 +6,9 @@ import javafx.scene.image.Image;
 
 public class Bomb extends Item {
 
-	public Image bombPic = new Image("bomb.png");
-
 	public Bomb() {
 		super();
-	}
-	
-	@Override
-	public void draw(GraphicsContext gc) {
-		gc.drawImage(bombPic,x,y);
+		this.itemImage = new Image("bomb.png");
 	}
 	
 	@Override
