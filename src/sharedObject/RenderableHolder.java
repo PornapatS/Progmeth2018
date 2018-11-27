@@ -90,6 +90,12 @@ public class RenderableHolder {
 					}
 				} 
 			}
+			if (i instanceof Alien) {
+				if (getDistance(x, ((Alien) i).getX(), y, ((Alien) i).getY()) <= 40) {
+					player.decreaseLife();
+					((Alien) i).setShow(false);
+				}
+			}
 		}
 	}
 	public void Collision(Alien alien, Player player) {

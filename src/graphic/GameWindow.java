@@ -31,6 +31,8 @@ public class GameWindow extends Canvas{
 	private boolean isOver = false;
 	private boolean isLvSix = false;
 	private boolean isAddedBoss = false;
+	private static Random rand = new Random();
+	private Item item;
 		
 	private Player player;
 	private Boss boss;
@@ -132,7 +134,17 @@ public class GameWindow extends Canvas{
 		RenderableHolder.getInstance().add(boss);
 	}
 	public void addItem() {
-		//TODO
+		int r = rand.nextInt(3);
+		if(r == 0) {
+			item = new Heart();
+		}
+		if(r == 1) {
+			item = new Barrier();
+		}
+		if(r == 2) {
+			item = new Bomb();
+		}
+		RenderableHolder.getInstance().add(item);
 	}
 	private void updateSong() {
 		if(!isOver && !isAddedBoss) {
