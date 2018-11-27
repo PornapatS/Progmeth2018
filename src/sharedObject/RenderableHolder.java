@@ -74,17 +74,17 @@ public class RenderableHolder {
 		double y = player.getY();
 		for (IRenderable i : object) {
 			if (i instanceof Item) {
-				if (getDistance(x, ((Item) i).getX(), y, ((Item) i).getY()) <= 40) {
+				if (getDistance(x, ((Item) i).getX(), y, ((Item) i).getY()) <= 60) {
 					((Item) i).effect(player);
 					((Item) i).setShow(false);
 				}
 			}
 			if (i instanceof Bullet) {
-				if (getDistance(x, ((Bullet) i).getX(), y, ((Bullet) i).getY()) <= 40 && ((Bullet) i).isFromBoss()) {
+				if (getDistance(x, ((Bullet) i).getX(), y, ((Bullet) i).getY()) <= 60 && ((Bullet) i).isFromBoss()) {
 					player.decreaseLife();
 					((Bullet) i).setShow(false);
 				} if (player.isBoss()) {
-					if (getDistance(x, ((Bullet) i).getX(), y, ((Bullet) i).getY()) <= 40 && !((Bullet) i).isFromBoss()) {
+					if (getDistance(x, ((Bullet) i).getX(), y, ((Bullet) i).getY()) <= 60 && !((Bullet) i).isFromBoss()) {
 						((Boss) player).decreaseLife();;
 						((Bullet) i).setShow(false);
 					}

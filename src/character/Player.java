@@ -10,7 +10,7 @@ public class Player extends Position {
 	private int level = 1;
 	private int life = 10;
 	private int score = 0;
-	private int speed = 5;
+	private int speed = 20;
 	private int barrierCount;
 	private boolean isBarrierOn = false;
 	private boolean isBoss = false;
@@ -34,22 +34,22 @@ public class Player extends Position {
 	@Override
 	public void updatePos() {
 		if (control.contains("a")) {
-			if (x >= 80) {
+			if (x >= -30) {
 				x -= speed;
 			}
 		}
 		if (control.contains("d")) {
-			if (x + 80 <= 800) {
+			if (x <= 700) {
 				x += speed; 	
 			}
 		}
 		if (control.contains("w")) {
-			if (y >= 70) {
+			if (y >= 20) {
 				y -= speed;
 			}
 		}
 		if (control.contains("s")) {
-			if (y + 65 <= 600) {
+			if (y + 100 <= 600) {
 				y += speed;
 			}
 		}
