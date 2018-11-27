@@ -8,7 +8,7 @@ public class Heart extends Item {
 	
 	public Heart() {
 		super();
-		this.itemImage = new Image("firstaidkid.png");
+		this.itemImage = new Image("firstaidkit.png");
 	}
 	
 	@Override

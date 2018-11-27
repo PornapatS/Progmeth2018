@@ -1,11 +1,17 @@
 package graphic;
 
+import java.util.Random;
+
 import character.Alien;
 import character.AlienA;
 import character.AlienB;
 import character.AlienC;
 import character.Boss;
 import character.Player;
+import items.Barrier;
+import items.Bomb;
+import items.Heart;
+import items.Item;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.Scene;
