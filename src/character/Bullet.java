@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 
 public class Bullet extends Position {
 	
+	private boolean isShow = true ;
 	private char direction;
 	private boolean isFromBoss = false;
 	public Image bulletPic;
@@ -57,5 +58,15 @@ public class Bullet extends Position {
 	public void setFromBoss(boolean isFromBoss) {
 		this.isFromBoss = isFromBoss;
 	}
+
+	public boolean isShow() {
+		return isShow;
+	}
+
+	public void setShow(boolean isShow) {
+		this.isShow = isShow;
+	}
+	
+	
 
 }

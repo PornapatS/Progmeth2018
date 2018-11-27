@@ -88,15 +88,19 @@ public class GameWindow extends Canvas{
 		scene.setOnKeyPressed((KeyEvent) -> {
 			if (KeyEvent.getCode() == KeyCode.LEFT) {
 				control += "a";
+				System.out.println(control);
 			}
 			if (KeyEvent.getCode() == KeyCode.RIGHT) {
 				control += "d";
+				System.out.println(control);
 			}
 			if (KeyEvent.getCode() == KeyCode.UP) {
 				control += "w";
+				System.out.println(control);
 			}
 			if (KeyEvent.getCode() == KeyCode.DOWN ) {
 				control += "s";
+				System.out.println(control);
 			}
 			if (KeyEvent.getCode() == KeyCode.ESCAPE ) {
 				Platform.exit();
