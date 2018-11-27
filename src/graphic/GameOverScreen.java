@@ -27,6 +27,7 @@ public class GameOverScreen {
 		gc.fillText("GAME OVER!", 150, 100);
 		gc.setFont(mainFont);
 		gc.fillText("SCORE : " + score, 300, 150);
+		gameoverSound.play();
 		t = new Thread(new Runnable() {
 			
 			@Override

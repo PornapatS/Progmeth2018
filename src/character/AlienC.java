@@ -7,10 +7,9 @@ public class AlienC extends Alien {
 
 	public AlienC(Player player) {
 		super(player);
-		Alien.setSpeed(4);
+		Alien.setSpeed(6);
 		this.score = 20;
 		this.alienPic = new Image("alienC.png");
-
 	}
 	
 	@Override

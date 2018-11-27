@@ -13,7 +13,11 @@ public class Bomb extends Item {
 	
 	@Override
 	public void effect(Player player) {
-		player.setLife(0);
+		if(player.isBarrierOn()) {
+			player.setBarrierOn(false);
+		} else {
+			player.setLife(0);			
+		}
 	}
 
 }

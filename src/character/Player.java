@@ -10,7 +10,7 @@ public class Player extends Position {
 	private int level = 1;
 	private int life = 10;
 	private int score = 0;
-	private int speed = 20;
+	private int speed = 10;
 	private int barrierCount;
 	private boolean isBarrierOn = false;
 	private boolean isBoss = false;
@@ -25,10 +25,10 @@ public class Player extends Position {
 	
 	@Override
 	public void draw(GraphicsContext gc) {
-		gc.drawImage(ownerPic, x, y);
 		if (isBarrierOn) {
-			gc.drawImage(barrierPic, x, y);
+			gc.drawImage(barrierPic, x-25, y-30);
 		}
+		gc.drawImage(ownerPic, x, y);
 	}
 	
 	@Override
@@ -56,7 +56,7 @@ public class Player extends Position {
 	}
 	
 	public Bullet attack(char c) {
-		Bullet bullet = new Bullet(x + 70, y - 20, c);
+		Bullet bullet = new Bullet(x + 28, y - 15, c);
 		RenderableHolder.getInstance().add(bullet);
 		bullet.setBullet();
 		return bullet;
@@ -69,16 +69,14 @@ public class Player extends Position {
 		}
 		return false;
 	}
-		
+	
 	public int getLevel() {
 		return level;
 	}
-
 	public void levelUp() {
 		level++;
 		levelupSound.play();
 	}
-
 	public int getScore() {
 		return score;
 	}
@@ -88,15 +86,15 @@ public class Player extends Position {
 	public int getLife() {
 		return life;
 	}
-
 	public void setLife(int life) {
 		this.life = life;
 	}
-
 	public void gainLife() {
 		life++;
+		if(this.life > 10) {
+			this.life = 10;
+		}
 	}
-	
 	public void decreaseLife() {
 		if (isBarrierOn) {
 			barrierCount--;
@@ -105,31 +103,30 @@ public class Player extends Position {
 			life--;
 		}
 	}
-	
 	public boolean isDead() {
 		if (life <= 0) return true;
 		return false;
 	}
-	
 	public void getBarrier() {
 		isBarrierOn = true;
 		barrierCount = 3;
 	}
-	
 	public int getBarrierCount() {
 		return barrierCount;
 	}
-	
+	public boolean isBarrierOn() {
+		return isBarrierOn;
+	}
+	public void setBarrierOn(boolean isBarrierOn) {
+		this.isBarrierOn = isBarrierOn;
+	}
 	public boolean isBoss() {
 		return isBoss;
 	}
-
 	public void setBoss(boolean isBoss) {
 		this.isBoss = isBoss;
 	}
-	
 	public void setControl(String control) {
 		this.control = control;
 	}
-
 }

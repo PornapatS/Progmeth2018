@@ -57,7 +57,7 @@ public class StartScreen {
 			public void handle(long now) {
 				setBackground();
 				if(!isSoundOn) gameSound.play();
-				if(timer == 50) {
+				if(timer == 30) {
 					root.getChildren().add(menu);
 				}
 				timer++;
