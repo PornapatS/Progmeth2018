@@ -1,7 +1,6 @@
 package items;
 
 import character.Player;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Heart extends Item {

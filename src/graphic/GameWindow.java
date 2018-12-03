@@ -183,7 +183,7 @@ public class GameWindow extends Canvas{
 		bossSound.play();
 	}
 	public void addItem() {
-		int r = randitem.nextInt(3);
+		int r = 1 ; //randitem.nextInt(3);
 		if(r == 0) {
 			item = new Heart();
 		}
@@ -271,6 +271,8 @@ public class GameWindow extends Canvas{
 		}
 		gameScreen.setScore(player.getScore());
 		gameScreen.setLife(player.getLife());
+		gameScreen.setBarrierOn(player.isBarrierOn());
+		gameScreen.setBarrierCount(player.getBarrierCount());
 	}
 	public void fire() {
 		player.attack('w');

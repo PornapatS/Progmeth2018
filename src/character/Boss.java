@@ -4,7 +4,6 @@ import java.util.Random;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
 import sharedObject.RenderableHolder;
 
 public class Boss extends Player {
