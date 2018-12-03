@@ -116,7 +116,7 @@ public class GameWindow extends Canvas{
 				Platform.exit();
 			}
 			if (KeyEvent.getCode() == KeyCode.B) {
-				state = 6;
+				setState(6);
 				addBoss();
 			}
 
@@ -142,7 +142,7 @@ public class GameWindow extends Canvas{
 	}
 	public void setDefault() {
 		frame = 0;
-		state = 1;
+		setState(1);
 		timerAlien = 80;
 		timerItem = 800;
 		timerLevel = 2000;
@@ -183,7 +183,7 @@ public class GameWindow extends Canvas{
 		bossSound.play();
 	}
 	public void addItem() {
-		int r = 1 ; //randitem.nextInt(3);
+		int r = randitem.nextInt(3);
 		if(r == 0) {
 			item = new Heart();
 		}
@@ -211,22 +211,22 @@ public class GameWindow extends Canvas{
 		}
 		if(frame % timerAlien == 0) {			
 			int r = randalien.nextInt(2);
-			if(state == 1) addAlienA();
-			if(state == 2 && r == 0) addAlienA();
-			if(state == 2 && r == 1) addAlienB();
-			if(state == 3) addAlienB();
-			if(state == 4 && r == 0) addAlienB();
-			if(state == 4 && r == 1) addAlienC();
-			if(state == 5) addAlienC();
-			if(state == 6 && isAddedBoss) addAlienC();
-			if(state == 6 && !isAddedBoss) addBoss();
+			if(getState() == 1) addAlienA();
+			if(getState() == 2 && r == 0) addAlienA();
+			if(getState() == 2 && r == 1) addAlienB();
+			if(getState() == 3) addAlienB();
+			if(getState() == 4 && r == 0) addAlienB();
+			if(getState() == 4 && r == 1) addAlienC();
+			if(getState() == 5) addAlienC();
+			if(getState() == 6 && isAddedBoss) addAlienC();
+			if(getState() == 6 && !isAddedBoss) addBoss();
 		}
 		if(frame % timerItem == 0) {
 			addItem();
 		}
-		if(frame % timerLevel == 0 && state < 6) {
+		if(frame % timerLevel == 0 && getState() < 6) {
 			player.levelUp();
-			state++;
+			setState(getState() + 1);
 			gameScreen.setLevel(player.getLevel());
 			timerItem -= 50;
 			timerAlien -= 5;
@@ -277,5 +277,11 @@ public class GameWindow extends Canvas{
 	public void fire() {
 		player.attack('w');
 	}
-
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	
 }

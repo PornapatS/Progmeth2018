@@ -25,4 +25,5 @@ public class AlienA extends Alien {
 		}
 		return false;
 	}
+	
 }

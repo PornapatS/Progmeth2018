@@ -14,7 +14,7 @@ public abstract class Alien extends Position {
 	public Image alienPic;
 	
 	public Alien(Player player) {
-		super(0,0); // have to insert it due to error!! 
+		super(0,0);
 		double x = 0;
 		double y = 0;
 		way = rand.nextInt(6)+1;
@@ -42,10 +42,44 @@ public abstract class Alien extends Position {
 	public abstract void draw(GraphicsContext gc);
 		
 	public void updatePos() {
-		y += getSpeed();
+		int state = player.getLevel(); 
+		if (state==2) {
+			if (this instanceof AlienA) {
+				x += getSpeed() * (Cos(player.getX(),player.getY()));
+				y += getSpeed() * (Sin(player.getX(),player.getY()));	
+			} else {
+				y += getSpeed();	
+			}
+		} else if (state==4) {
+			if (this instanceof AlienB) {
+				x += getSpeed() * (Cos(player.getX(),player.getY()));
+				y += getSpeed() * (Sin(player.getX(),player.getY()));	
+			} else {
+				y += getSpeed();	
+			}
+		} else {
+			x += getSpeed() * (Cos(player.getX(),player.getY()));
+			y += getSpeed() * (Sin(player.getX(),player.getY()));
+		} 
 		if (player.isAttacked(x, y) || y > 600) {
 			setShow(false);
 		}
+	}
+	
+	public double Cos(double playerx, double playery) {
+		double kam = playery-this.y;
+		double chid = playerx-this.x;
+		double chack = Math.sqrt((kam*kam)+(chid*chid));
+		double cos = chid/chack;	
+		return cos;
+	}
+	
+	public double Sin(double playerx, double playery) {
+		double kam = playery-this.y;
+		double chid = playerx-this.x;
+		double chack = Math.sqrt((kam*kam)+(chid*chid));
+		double sin = kam/chack;
+		return sin;
 	}
 	
 	public abstract boolean isDestroyed(double x,double y);
