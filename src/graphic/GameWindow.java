@@ -45,7 +45,7 @@ public class GameWindow extends Canvas{
 	private static Random randalien = new Random();
 	
 	private int timerLevel = 2000;
-	private int timerAlien = 100;
+	private int timerAlien = 80;
 	private int timerItem = 800;
 	
 	private Player player;
@@ -143,7 +143,7 @@ public class GameWindow extends Canvas{
 	public void setDefault() {
 		frame = 0;
 		state = 1;
-		timerAlien = 100;
+		timerAlien = 80;
 		timerItem = 800;
 		timerLevel = 2000;
 		isOver = false;

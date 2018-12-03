@@ -38,7 +38,7 @@ public class Boss extends Player {
 		if (timer == 100) {
 			isCoolDown = true;
 		}
-		if (timer == 500) {
+		if (timer == 300) {
 			setX(rand.nextDouble() * 680);
 			isCoolDown = false;
 			timer = 0;
