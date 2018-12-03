@@ -17,7 +17,9 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
@@ -28,6 +30,7 @@ public class GameWindow extends Canvas{
 	private StartScreen startScreen;
 	private GameScreen gameScreen;
 	private GraphicsContext gc;
+	AnchorPane bosspane = new AnchorPane();
 	private StackPane root;
 	private Scene scene;
 	private Stage primaryStage;
@@ -51,6 +54,7 @@ public class GameWindow extends Canvas{
 	private Alien alienB;	
 	private Alien alienC;
 	private Item item;
+	private ProgressBar bossBar = new ProgressBar();
 	
 	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
 	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("winner.wav").toString());
@@ -167,6 +171,13 @@ public class GameWindow extends Canvas{
 	public void addBoss() {
 		boss = new Boss();
 		isAddedBoss = true;
+		bossBar.setProgress(1);
+		
+		bosspane.getChildren().add(bossBar);
+		bosspane.setTopAnchor(bossBar, boss.getY() - 50);
+		bosspane.setLeftAnchor(bossBar, boss.getX() + 110);
+		
+		root.getChildren().add(bosspane);
 		RenderableHolder.getInstance().add(boss);
 		gameSound.stop();
 		bossSound.play();
@@ -228,6 +239,9 @@ public class GameWindow extends Canvas{
 		RenderableHolder.getInstance().Collision(player);
 		if(isAddedBoss) {
 			RenderableHolder.getInstance().Collision(boss);
+			bossBar.setProgress(0.02 * boss.getLife());
+			bosspane.setTopAnchor(bossBar, boss.getY() - 50);
+			bosspane.setLeftAnchor(bossBar, boss.getX() + 110);
 		}
 		updateData();			
 		this.gameScreen.draw(gc);
@@ -240,6 +254,7 @@ public class GameWindow extends Canvas{
 			gameSound.stop();
 			bossSound.stop();
 			windowAnimation.stop();
+			root.getChildren().remove(bosspane);
 			isStageOn = false;
 			if(player.isDead()) {
 				GameOverScreen.startanimation(gc, player.getScore());

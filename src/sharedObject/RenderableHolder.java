@@ -79,9 +79,16 @@ public class RenderableHolder {
 					double dx = Math.abs(x + c - ((Bullet) i).getX());
 					double dy = Math.abs(y - ((Bullet) i).getY());
 					if (dx <= 140 && dy <= 100) {
-						((Boss) player).decreaseLife();;
+						((Boss) player).decreaseLife();
 						((Bullet) i).setShow(false);
 					}
+				}
+				if (i instanceof Player && !((Player)i).isBoss()) {
+					double dx = Math.abs(x + c - ((Player) i).getX());
+					double dy = Math.abs(y - ((Player) i).getY());
+					if (dx <= 140 && dy <= 100) {
+						((Player) i).setLife(0);;
+					}					
 				}
 			}
 		} else {

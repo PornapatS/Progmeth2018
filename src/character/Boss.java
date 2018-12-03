@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 import sharedObject.RenderableHolder;
 
 public class Boss extends Player {
@@ -17,8 +18,8 @@ public class Boss extends Player {
 		setX(400);
 		setY(100);
 		setBoss(true);
-		setCenterX(145);
-		this.setLife(25);	
+		setCenterX(135);
+		this.setLife(50);	
 		this.ownerPic = new Image("boss.png");
 	}
 	
@@ -54,6 +55,9 @@ public class Boss extends Player {
 		return bullet;
 	}	
 	
+	public void setLifeBar() {
+		
+	}
 }
 
                  
