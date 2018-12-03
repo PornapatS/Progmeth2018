@@ -17,6 +17,7 @@ public class Boss extends Player {
 		setX(400);
 		setY(100);
 		setBoss(true);
+		setCenterX(145);
 		this.setLife(25);	
 		this.ownerPic = new Image("boss.png");
 	}

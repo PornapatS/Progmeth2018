@@ -38,8 +38,6 @@ public class StartScreen {
 		gc = canvas.getGraphicsContext2D();
 		menu = new Buttons("Start");
 		setupButton();
-		gameSound.play();
-		isSoundOn = true;
 	}
 	public void draw(GraphicsContext gc) {
 		StackPane root = new StackPane();
@@ -51,6 +49,8 @@ public class StartScreen {
 
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("ALIEN");
+		gameSound.play();
+		isSoundOn = true;
 
 		startscreenAnimation = new AnimationTimer() {
 			@Override

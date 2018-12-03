@@ -10,8 +10,9 @@ public class Player extends Position {
 	private int level = 1;
 	private int life = 10;
 	private int score = 0;
-	private int speed = 10;
+	private int speed = 12;
 	private int barrierCount;
+	private double centerX = 25;
 	private boolean isBarrierOn = false;
 	private boolean isBoss = false;
 	private String control;
@@ -26,7 +27,7 @@ public class Player extends Position {
 	@Override
 	public void draw(GraphicsContext gc) {
 		if (isBarrierOn) {
-			gc.drawImage(barrierPic, x-25, y-30);
+			gc.drawImage(barrierPic, x-centerX, y-30);
 		}
 		gc.drawImage(ownerPic, x, y);
 	}
@@ -75,6 +76,7 @@ public class Player extends Position {
 	}
 	public void levelUp() {
 		level++;
+		speed++;
 		levelupSound.play();
 	}
 	public int getScore() {
@@ -129,4 +131,13 @@ public class Player extends Position {
 	public void setControl(String control) {
 		this.control = control;
 	}
+
+	public double getCenterX() {
+		return centerX;
+	}
+
+	public void setCenterX(double centerX) {
+		this.centerX = centerX;
+	}
+	
 }

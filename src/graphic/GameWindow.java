@@ -42,7 +42,7 @@ public class GameWindow extends Canvas{
 	private static Random randalien = new Random();
 	
 	private int timerLevel = 2000;
-	private int timerAlien = 50;
+	private int timerAlien = 100;
 	private int timerItem = 800;
 	
 	private Player player;
@@ -93,19 +93,15 @@ public class GameWindow extends Canvas{
 		scene.setOnKeyPressed((KeyEvent) -> {
 			if (KeyEvent.getCode() == KeyCode.LEFT) {
 				control += "a";
-				System.out.println(control);
 			}
 			if (KeyEvent.getCode() == KeyCode.RIGHT) {
 				control += "d";
-				System.out.println(control);
 			}
 			if (KeyEvent.getCode() == KeyCode.UP) {
 				control += "w";
-				System.out.println(control);
 			}
 			if (KeyEvent.getCode() == KeyCode.DOWN ) {
 				control += "s";
-				System.out.println(control);
 			}
 			if (KeyEvent.getCode() == KeyCode.ENTER && !isStageOn) {
 				windowAnimation.stop();
@@ -114,6 +110,10 @@ public class GameWindow extends Canvas{
 			}
 			if (KeyEvent.getCode() == KeyCode.ESCAPE ) {
 				Platform.exit();
+			}
+			if (KeyEvent.getCode() == KeyCode.B) {
+				state = 6;
+				addBoss();
 			}
 
 		});
@@ -139,6 +139,9 @@ public class GameWindow extends Canvas{
 	public void setDefault() {
 		frame = 0;
 		state = 1;
+		timerAlien = 100;
+		timerItem = 800;
+		timerLevel = 2000;
 		isOver = false;
 		isAddedBoss = false;
 		isStageOn = true;
@@ -192,7 +195,7 @@ public class GameWindow extends Canvas{
 
 	private void updateState() {
 		frame++;
-		if(frame % 15 == 0) {
+		if(frame % 12 == 0) {
 			fire();
 		}
 		if(frame % timerAlien == 0) {			
@@ -216,7 +219,7 @@ public class GameWindow extends Canvas{
 			gameScreen.setLevel(player.getLevel());
 			timerItem -= 50;
 			timerAlien -= 5;
-			timerLevel += 500;
+			timerLevel += 200;
 			frame = 0;
 		}
 	}
@@ -247,11 +250,12 @@ public class GameWindow extends Canvas{
 		}
 	}
 	public void updateData() {
-		gameScreen.setScore(player.getScore());
-		gameScreen.setLife(player.getLife());
 		if(player.isDead() || (isAddedBoss && boss.isDead())) {
+			if(boss.isDead()) player.addScore(500);
 			isOver = true;
 		}
+		gameScreen.setScore(player.getScore());
+		gameScreen.setLife(player.getLife());
 	}
 	public void fire() {
 		player.attack('w');

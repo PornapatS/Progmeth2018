@@ -65,35 +65,44 @@ public class RenderableHolder {
 	}
 	
 	public double getDistance(double x1, double x2, double y1, double y2) {
-		double distance = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
-		return distance;
+		return Math.sqrt((x1 - x2)*(x1 - x2)+(y1 - y2)*(y1 - y2));
 	}
 	
 	public void Collision(Player player) {
 		double x = player.getX();
 		double y = player.getY();
-		for (IRenderable i : object) {
-			if (i instanceof Item) {
-				if (getDistance(x, ((Item) i).getX(), y, ((Item) i).getY()) <= 60) {
-					((Item) i).effect(player);
-					((Item) i).setShow(false);
-				}
-			}
-			if (i instanceof Bullet) {
-				if (getDistance(x, ((Bullet) i).getX(), y, ((Bullet) i).getY()) <= 60 && ((Bullet) i).isFromBoss()) {
-					player.decreaseLife();
-					((Bullet) i).setShow(false);
-				} if (player.isBoss()) {
-					if (getDistance(x, ((Bullet) i).getX(), y, ((Bullet) i).getY()) <= 60 && !((Bullet) i).isFromBoss()) {
+		double c = player.getCenterX();
+		
+		if(player.isBoss()) {
+			for (IRenderable i : object) {
+				if (i instanceof Bullet && !((Bullet) i).isFromBoss()) {
+					double dx = Math.abs(x + c - ((Bullet) i).getX());
+					double dy = Math.abs(y - ((Bullet) i).getY());
+					if (dx <= 140 && dy <= 100) {
 						((Boss) player).decreaseLife();;
 						((Bullet) i).setShow(false);
 					}
-				} 
+				}
 			}
-			if (i instanceof Alien) {
-				if (getDistance(x, ((Alien) i).getX(), y, ((Alien) i).getY()) <= 40) {
-					player.decreaseLife();
-					((Alien) i).setShow(false);
+		} else {
+			for (IRenderable i : object) {
+				if (i instanceof Item) {
+					if (getDistance(x, ((Item) i).getX(), y, ((Item) i).getY()) <= 60) {
+						((Item) i).effect(player);
+						((Item) i).setShow(false);
+					}
+				}
+				if (i instanceof Bullet) {
+					if (getDistance(x, ((Bullet) i).getX(), y, ((Bullet) i).getY()) <= 60 && ((Bullet) i).isFromBoss()) {
+						player.decreaseLife();
+						((Bullet) i).setShow(false);
+					} 
+				}
+				if (i instanceof Alien) {
+					if (getDistance(x, ((Alien) i).getX(), y, ((Alien) i).getY()) <= 40) {
+						player.decreaseLife();
+						((Alien) i).setShow(false);
+					}
 				}
 			}
 		}

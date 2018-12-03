@@ -7,7 +7,7 @@ public class AlienB extends Alien {
 	
 	public AlienB(Player player) {
 		super(player);
-		Alien.setSpeed(4);
+		Alien.setSpeed(3);
 		this.score = 10;
 		this.alienPic = new Image("alienB.png");
 
