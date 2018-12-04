@@ -61,7 +61,6 @@ public class GameWindow extends Canvas{
 	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("bossSound.mp3").toString());
 	public AudioClip warningSound = new AudioClip(ClassLoader.getSystemResource("warningSound.wav").toString());
 
-	public AudioClip shootingSound = new AudioClip(ClassLoader.getSystemResource("shooting.wav").toString());
 	public AudioClip levelupSound = new AudioClip(ClassLoader.getSystemResource("levelup.wav").toString());
 	public AudioClip receiveItemSound = new AudioClip(ClassLoader.getSystemResource("receiveitem.wav").toString());
 
@@ -239,7 +238,6 @@ public class GameWindow extends Canvas{
 		frame++;
 		if(frame % 15 == 0) {
 			fire();
-			shootingSound.play();
 		}
 		if(frame % timerAlien == 0) {			
 			int r = randalien.nextInt(2);
@@ -329,7 +327,7 @@ public class GameWindow extends Canvas{
 	}
 	public void updateData() {
 		if(player.isDead() || (isAddedBoss && boss.isDead())) {
-			if(boss.isDead()) player.addScore(500);
+			if(isAddedBoss && boss.isDead()) player.addScore(500);
 			isOver = true;
 		}
 		gameScreen.setScore(player.getScore());
@@ -342,7 +340,6 @@ public class GameWindow extends Canvas{
 		bossSound.stop();
 		warningSound.stop();
 
-		shootingSound.stop();
 		levelupSound.stop();
 		receiveItemSound.stop();
 		
@@ -354,7 +351,6 @@ public class GameWindow extends Canvas{
 		bossSound.setVolume(0.8);
 		warningSound.setVolume(0.8);
 		
-		shootingSound.setVolume(0.08);
 		levelupSound.setVolume(1.5);
 		receiveItemSound.setVolume(0.8);
 		
