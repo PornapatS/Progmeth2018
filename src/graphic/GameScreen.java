@@ -15,12 +15,11 @@ public class GameScreen implements IRenderable {
 	private boolean isBarrierOn = false;
 	private Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 25);
 	public Image background = new Image("gamescreenbg.png");
+	public Image warningbg = new Image("warning.png");
+	public Image losebg = new Image("ilose.png");
 	public Image lifeImage = new Image("life.png");
 	public Image barrierImage = new Image("barriacount.png");
 	
-	public GameScreen() {
-	
-	}
 	public void draw(GraphicsContext gc) {
 		gc.drawImage(background, 0, 0);
 		gc.setFont(mainFont);
@@ -37,6 +36,14 @@ public class GameScreen implements IRenderable {
 				gc.drawImage(barrierImage, 574, 10);				
 			}
 		}
+	}
+	public void setBgLose(GraphicsContext gc) {
+		gc.drawImage(background, 0, 0);
+		gc.drawImage(losebg, 0, 0);
+	}
+	public void setBgWarning(GraphicsContext gc) {
+		gc.drawImage(background, 0, 0);
+		gc.drawImage(warningbg, 0, 0);
 	}
 	public boolean isShow() {
 		return true;

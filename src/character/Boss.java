@@ -53,10 +53,6 @@ public class Boss extends Player {
 		bullet.setBullet();
 		return bullet;
 	}	
-	
-	public void setLifeBar() {
-		
-	}
 }
 
                  

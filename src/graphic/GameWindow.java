@@ -41,6 +41,7 @@ public class GameWindow extends Canvas{
 	private boolean isStageOn;
 	private boolean isOver;
 	private boolean isAddedBoss;
+	private boolean firstTime = true;
 	private static Random randitem = new Random();
 	private static Random randalien = new Random();
 	
@@ -58,7 +59,7 @@ public class GameWindow extends Canvas{
 	
 	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
 	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("winner.wav").toString());
-	
+	// TODO Edit gameSound and bossSound
 	
 	public GameWindow(Stage primaryStage) {
 		setWidth(800);
@@ -116,8 +117,8 @@ public class GameWindow extends Canvas{
 				Platform.exit();
 			}
 			if (KeyEvent.getCode() == KeyCode.B) {
-				setState(6);
-				addBoss();
+				setState(5);
+				//addBoss();
 			}
 
 		});
@@ -172,15 +173,15 @@ public class GameWindow extends Canvas{
 		boss = new Boss();
 		isAddedBoss = true;
 		bossBar.setProgress(1);
-		
 		bosspane.getChildren().add(bossBar);
 		bosspane.setTopAnchor(bossBar, boss.getY() - 50);
 		bosspane.setLeftAnchor(bossBar, boss.getX() + 110);
-		
+
 		root.getChildren().add(bosspane);
-		RenderableHolder.getInstance().add(boss);
+		RenderableHolder.getInstance().add(boss);						
 		gameSound.stop();
 		bossSound.play();
+
 	}
 	public void addItem() {
 		int r = randitem.nextInt(3);
@@ -219,20 +220,33 @@ public class GameWindow extends Canvas{
 			if(getState() == 4 && r == 1) addAlienC();
 			if(getState() == 5) addAlienC();
 			if(getState() == 6 && isAddedBoss) addAlienC();
-			if(getState() == 6 && !isAddedBoss) addBoss();
+			if(getState() == 6 && !isAddedBoss) {
+				if(!firstTime) addBoss();
+				else {
+					// TODO waiting boss sound
+					firstTime = false;
+					frame = 0;
+				}
+			}
 		}
 		if(frame % timerItem == 0) {
 			addItem();
 		}
 		if(frame % timerLevel == 0 && getState() < 6) {
-			player.levelUp();
 			setState(getState() + 1);
+			player.levelUp();
 			gameScreen.setLevel(player.getLevel());
 			timerItem -= 50;
 			timerAlien -= 5;
 			timerLevel += 200;
 			frame = 0;
 		}
+		if(getState() == 6 && !isAddedBoss) {
+			gameScreen.setBgWarning(gc);
+			
+			System.out.println(frame);
+		}
+
 	}
 	private void updateDetail() {
 		RenderableHolder.getInstance().remove();
@@ -257,10 +271,23 @@ public class GameWindow extends Canvas{
 			root.getChildren().remove(bosspane);
 			isStageOn = false;
 			if(player.isDead()) {
-				GameOverScreen.startanimation(gc, player.getScore());
+				GameOverScreen.startanimation(gc, player.getScore());												
 			}
 			if(isAddedBoss && boss.isDead()) {
-				WinnerScreen.startanimation(gc, player.getScore());
+				Thread t = new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						gameScreen.setBgLose(gc);
+						try {
+							Thread.sleep(2500);
+						} catch (InterruptedException e){
+							e.printStackTrace();
+						}
+						WinnerScreen.startanimation(gc, player.getScore());
+					}
+				});
+				t.start();
 			}
 		}
 	}
