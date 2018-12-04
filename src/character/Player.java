@@ -12,8 +12,10 @@ public class Player extends Position {
 	private int score = 0;
 	private int speed = 12;
 	private int barrierCount;
+	private int extraBulletCount = 0;
 	private double centerX = 25;
 	private boolean isBarrierOn = false;
+	private boolean isExtraBulletOn = false;
 	private boolean isBoss = false;
 	private String control;
 	public Image ownerPic = new Image("player.png");
@@ -119,6 +121,22 @@ public class Player extends Position {
 	}
 	public void setBarrierOn(boolean isBarrierOn) {
 		this.isBarrierOn = isBarrierOn;
+	}
+	public void getExtraBullet() {
+		isExtraBulletOn = true;
+		extraBulletCount += 5;
+	}
+	public int getExtraBulletCount() {
+		return extraBulletCount;
+	}
+	public void setExtraBulletCount(int extraBulletCount) {
+		this.extraBulletCount = extraBulletCount;
+	}
+	public boolean isExtraBulletOn() {
+		return isExtraBulletOn;
+	}
+	public void setExtraBulletOn(boolean isExtraBulletOn) {
+		this.isExtraBulletOn = isExtraBulletOn;
 	}
 	public boolean isBoss() {
 		return isBoss;

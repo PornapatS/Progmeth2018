@@ -7,6 +7,7 @@ import character.AlienA;
 import character.AlienB;
 import character.AlienC;
 import character.Boss;
+import items.ExtraBullet;
 import character.Player;
 import items.Barrier;
 import items.Bomb;
@@ -46,8 +47,8 @@ public class GameWindow extends Canvas{
 	private static Random randalien = new Random();
 	
 	private int timerLevel = 2000;
-	private int timerAlien = 80;
-	private int timerItem = 800;
+	private int timerAlien = 70;
+	private int timerItem = 180;
 	
 	private Player player;
 	private Boss boss;
@@ -120,6 +121,22 @@ public class GameWindow extends Canvas{
 				windowAnimation.stop();
 				setDefault();
 				startScreen.startanimation();
+			}
+			if (KeyEvent.getCode() == KeyCode.SPACE) {
+				if (!isOver && player.isExtraBulletOn()) {
+					player.attack('a');
+					player.attack('y');
+					player.attack('w');
+					player.attack('t');
+					player.attack('d');
+					player.attack('s');
+					player.attack('r');
+					player.attack('u');
+					player.setExtraBulletCount(player.getExtraBulletCount()-1);
+					if (player.getExtraBulletCount()==0) {
+						player.setExtraBulletOn(false);
+					}
+				}
 			}
 			
 // TODO Mute sound function
@@ -210,7 +227,7 @@ public class GameWindow extends Canvas{
 
 	}
 	public void addItem() {
-		int r = randitem.nextInt(3);
+		int r = randitem.nextInt(6);
 		if(r == 0) {
 			item = new Heart();
 		}
@@ -219,6 +236,9 @@ public class GameWindow extends Canvas{
 		}
 		if(r == 2) {
 			item = new Bomb();
+		}
+		if(r == 3 || r == 4 || r == 5) {
+			item = new ExtraBullet();
 		}
 		RenderableHolder.getInstance().add(item);
 	}
@@ -334,6 +354,7 @@ public class GameWindow extends Canvas{
 		gameScreen.setLife(player.getLife());
 		gameScreen.setBarrierOn(player.isBarrierOn());
 		gameScreen.setBarrierCount(player.getBarrierCount());
+		gameScreen.setExtraBulletCount(player.getExtraBulletCount());
 	}
 	public void stopAllSound() {
 		gameSound.stop();

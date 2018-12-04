@@ -12,6 +12,7 @@ public class GameScreen implements IRenderable {
 	private int score = 0;
 	private int life = 10;
 	private int barrierCount = 0;
+	private int extraBulletCount = 0;
 	private boolean isBarrierOn = false;
 	private Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 25);
 	public Image background = new Image("gamescreenbg.png");
@@ -19,6 +20,7 @@ public class GameScreen implements IRenderable {
 	public Image losebg = new Image("ilose.png");
 	public Image lifeImage = new Image("life.png");
 	public Image barrierImage = new Image("barriacount.png");
+	public Image extraBulletImage = new Image("extrabulletcount.png");
 	
 	public void draw(GraphicsContext gc) {
 		gc.drawImage(background, 0, 0);
@@ -28,12 +30,14 @@ public class GameScreen implements IRenderable {
 		gc.fillText("Score : " + score, 230, 30);
 		gc.drawImage(lifeImage, 395, 12);
 		gc.fillText(" : " + life, 415, 30);
+		gc.drawImage(extraBulletImage, 488, 9);
+		gc.fillText(" : " + extraBulletCount, 500, 30);
 		if (isBarrierOn) {
-			gc.drawImage(barrierImage, 520, 10);				
+			gc.drawImage(barrierImage, 570, 10);				
 			if (barrierCount > 1) {
-				gc.drawImage(barrierImage, 547, 10);				
+				gc.drawImage(barrierImage, 597, 10);				
 			} if (barrierCount > 2) {
-				gc.drawImage(barrierImage, 574, 10);				
+				gc.drawImage(barrierImage, 624, 10);				
 			}
 		}
 	}
@@ -63,5 +67,7 @@ public class GameScreen implements IRenderable {
 	public void setBarrierOn(boolean isBarrierOn) {
 		this.isBarrierOn = isBarrierOn;
 	}
-	
+	public void setExtraBulletCount(int extraBulletCount) {
+		this.extraBulletCount = extraBulletCount;
+	}
 }
