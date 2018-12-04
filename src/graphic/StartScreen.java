@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import logic.Buttons;
 
 public class StartScreen {
-	private static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 20);
 	private static final Font titleFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 100);;
 	private Stage primaryStage;
 	private Canvas canvas;
@@ -32,7 +31,7 @@ public class StartScreen {
 		this.primaryStage = primaryStage;
 		canvas = new Canvas(800, 600);
 		gc = canvas.getGraphicsContext2D();
-		menu = new Buttons("Start");
+		menu = new Buttons();
 		setupButton();
 		gameSound.setVolume(0.6);
 		buttonSound.setVolume(1);		

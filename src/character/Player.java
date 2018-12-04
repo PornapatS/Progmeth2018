@@ -11,7 +11,7 @@ public class Player extends Position {
 	private int life = 10;
 	private int score = 0;
 	private int speed = 12;
-	private int barrierCount;
+	private int barrierCount = 0;
 	private int extraBulletCount = 0;
 	private double centerX = 25;
 	private boolean isBarrierOn = false;

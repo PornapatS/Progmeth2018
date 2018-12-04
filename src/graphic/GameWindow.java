@@ -46,9 +46,9 @@ public class GameWindow extends Canvas{
 	private static Random randitem = new Random();
 	private static Random randalien = new Random();
 	
-	private int timerLevel = 2000;
-	private int timerAlien = 70;
-	private int timerItem = 180;
+	private int timerLevel;
+	private int timerAlien;
+	private int timerItem;
 	
 	private Player player;
 	private Boss boss;
@@ -138,26 +138,21 @@ public class GameWindow extends Canvas{
 					}
 				}
 			}
-			
-// TODO Mute sound function
-//			if (KeyEvent.getCode() == KeyCode.M) {
-//				stopAllSound();
-//				gameSound.setVolume(0);
-//				bossSound.setVolume(0);
-//				warningSound.setVolume(0);
-//				levelupSound.setVolume(0);
-//				shootingSound.setVolume(0);
-//				receiveItemSound.setVolume(0);
-//				winnerSound.setVolume(0);
-//				gameoverSound.setVolume(0);
-//
-//			}
-//			if (KeyEvent.getCode() == KeyCode.N) {
-//				setSoundVolume();
-//				stopAllSound();
-//				updateSong();							
-//			}
-			
+			if (KeyEvent.getCode() == KeyCode.M) {
+				stopAllSound();
+				gameSound.setVolume(0);
+				bossSound.setVolume(0);
+				warningSound.setVolume(0);
+				levelupSound.setVolume(0);
+				receiveItemSound.setVolume(0);
+				winnerSound.setVolume(0);
+				gameoverSound.setVolume(0);
+			}
+			if (KeyEvent.getCode() == KeyCode.N) {
+				setSoundVolume();
+				stopAllSound();
+				updateSong();							
+			}			
 			if (KeyEvent.getCode() == KeyCode.ESCAPE ) {
 				Platform.exit();
 			}
@@ -188,8 +183,8 @@ public class GameWindow extends Canvas{
 	public void setDefault() {
 		frame = 0;
 		setState(1);
-		timerAlien = 80;
-		timerItem = 800;
+		timerAlien = 70;
+		timerItem = 180;
 		timerLevel = 2000;
 		isOver = false;
 		isAddedBoss = false;

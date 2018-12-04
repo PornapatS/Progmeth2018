@@ -16,14 +16,14 @@ public class Buttons extends HBox{
 	public Button startButton;
 	public Button exitButton;
 	
-	public Buttons(String name) {
+	public Buttons() {
 		setSpacing(40);
 		setPrefWidth(800);
 		setPrefHeight(100);
 		setAlignment(Pos.BOTTOM_CENTER);
 		setPadding(new Insets(10, 10, 10, 10));
 		
-		startButton = new Button(name);
+		startButton = new Button("Start");
 		exitButton = new Button("Exit");		
 		startButton.setPrefSize(100, 45);
 		exitButton.setPrefSize(100, 45);
