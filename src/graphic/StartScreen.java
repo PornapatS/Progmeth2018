@@ -23,7 +23,7 @@ public class StartScreen {
 	private boolean isSoundOn = false;
 	public Buttons menu;
 	public Image background;
-	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
+	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("startSound.wav").toString());
 	public AudioClip buttonSound = new AudioClip(ClassLoader.getSystemResource("buttonsound.wav").toString());
 	private AnimationTimer startscreenAnimation;
 	private int timer = 0;
@@ -34,6 +34,8 @@ public class StartScreen {
 		gc = canvas.getGraphicsContext2D();
 		menu = new Buttons("Start");
 		setupButton();
+		gameSound.setVolume(0.6);
+		buttonSound.setVolume(1);		
 	}
 	public void draw(GraphicsContext gc) {
 		StackPane root = new StackPane();

@@ -10,7 +10,6 @@ public class GameOverScreen {
 	public static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 40);
 	public static final Font gameoverFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 100);
 	public static final Image background  = new Image("gameoverscreenbg.png");
-	public static AudioClip gameoverSound = new AudioClip(ClassLoader.getSystemResource("gameover01.wav").toString());
 
 	public static void draw(GraphicsContext gc, int score) {				
 		gc.drawImage(background, 0, 0);
@@ -20,7 +19,6 @@ public class GameOverScreen {
 		gc.fillText("GAME OVER!", 150, 100);
 		gc.setFont(mainFont);
 		gc.fillText("SCORE : " + score, 300, 150);
-		gameoverSound.play();
 	}
 
 	public static void startanimation(GraphicsContext gc, int score) {

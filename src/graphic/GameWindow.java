@@ -57,10 +57,17 @@ public class GameWindow extends Canvas{
 	private Item item;
 	private ProgressBar bossBar = new ProgressBar();
 	
-	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("Tempo.mp3").toString());
-	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("winner.wav").toString());
-	// TODO Edit gameSound and bossSound
-	
+	public AudioClip gameSound = new AudioClip(ClassLoader.getSystemResource("gameSound.wav").toString());
+	public AudioClip bossSound = new AudioClip(ClassLoader.getSystemResource("bossSound.mp3").toString());
+	public AudioClip warningSound = new AudioClip(ClassLoader.getSystemResource("warningSound.wav").toString());
+
+	public AudioClip shootingSound = new AudioClip(ClassLoader.getSystemResource("shooting.wav").toString());
+	public AudioClip levelupSound = new AudioClip(ClassLoader.getSystemResource("levelup.wav").toString());
+	public AudioClip receiveItemSound = new AudioClip(ClassLoader.getSystemResource("receiveitem.wav").toString());
+
+	public static AudioClip winnerSound = new AudioClip(ClassLoader.getSystemResource("winner.wav").toString());
+	public static AudioClip gameoverSound = new AudioClip(ClassLoader.getSystemResource("gameover01.wav").toString());
+
 	public GameWindow(Stage primaryStage) {
 		setWidth(800);
 		setHeight(600);
@@ -75,6 +82,8 @@ public class GameWindow extends Canvas{
 		
 		this.primaryStage = primaryStage;
 		this.primaryStage.setScene(scene);
+
+		setSoundVolume();
 		gameSound.play();
 	}
 	public void draw() {
@@ -113,12 +122,31 @@ public class GameWindow extends Canvas{
 				setDefault();
 				startScreen.startanimation();
 			}
+			
+// TODO Mute sound function
+//			if (KeyEvent.getCode() == KeyCode.M) {
+//				stopAllSound();
+//				gameSound.setVolume(0);
+//				bossSound.setVolume(0);
+//				warningSound.setVolume(0);
+//				levelupSound.setVolume(0);
+//				shootingSound.setVolume(0);
+//				receiveItemSound.setVolume(0);
+//				winnerSound.setVolume(0);
+//				gameoverSound.setVolume(0);
+//
+//			}
+//			if (KeyEvent.getCode() == KeyCode.N) {
+//				setSoundVolume();
+//				stopAllSound();
+//				updateSong();							
+//			}
+			
 			if (KeyEvent.getCode() == KeyCode.ESCAPE ) {
 				Platform.exit();
 			}
 			if (KeyEvent.getCode() == KeyCode.B) {
-				setState(5);
-				//addBoss();
+				setState(6);
 			}
 
 		});
@@ -153,8 +181,7 @@ public class GameWindow extends Canvas{
 		gameScreen.setLevel(1);
 		gameScreen.setLife(10);
 		gameScreen.setScore(0);
-		gameSound.stop();
-		bossSound.stop();
+		stopAllSound();
 		RenderableHolder.getInstance().clearList();
 	}
 	public void addAlienA() {
@@ -179,7 +206,7 @@ public class GameWindow extends Canvas{
 
 		root.getChildren().add(bosspane);
 		RenderableHolder.getInstance().add(boss);						
-		gameSound.stop();
+		stopAllSound();
 		bossSound.play();
 
 	}
@@ -197,8 +224,11 @@ public class GameWindow extends Canvas{
 		RenderableHolder.getInstance().add(item);
 	}
 	private void updateSong() {
-		if(!isOver && !isAddedBoss) {
+		if(!isOver && !isAddedBoss && state != 6) {
 			if(!gameSound.isPlaying()) gameSound.play();
+		}
+		if(!isOver && !isAddedBoss && state == 6) {
+			if(!warningSound.isPlaying()) warningSound.play();
 		}
 		if(!isOver && isAddedBoss && !boss.isDead()) {
 			if(!bossSound.isPlaying()) bossSound.play();
@@ -207,8 +237,9 @@ public class GameWindow extends Canvas{
 
 	private void updateState() {
 		frame++;
-		if(frame % 12 == 0) {
+		if(frame % 15 == 0) {
 			fire();
+			shootingSound.play();
 		}
 		if(frame % timerAlien == 0) {			
 			int r = randalien.nextInt(2);
@@ -221,9 +252,14 @@ public class GameWindow extends Canvas{
 			if(getState() == 5) addAlienC();
 			if(getState() == 6 && isAddedBoss) addAlienC();
 			if(getState() == 6 && !isAddedBoss) {
-				if(!firstTime) addBoss();
+				if(!firstTime) {
+					stopAllSound();
+					bossSound.play();
+					addBoss();
+				}
 				else {
-					// TODO waiting boss sound
+					stopAllSound();
+					warningSound.play();
 					firstTime = false;
 					frame = 0;
 				}
@@ -235,6 +271,7 @@ public class GameWindow extends Canvas{
 		if(frame % timerLevel == 0 && getState() < 6) {
 			setState(getState() + 1);
 			player.levelUp();
+			levelupSound.play();
 			gameScreen.setLevel(player.getLevel());
 			timerItem -= 50;
 			timerAlien -= 5;
@@ -243,14 +280,12 @@ public class GameWindow extends Canvas{
 		}
 		if(getState() == 6 && !isAddedBoss) {
 			gameScreen.setBgWarning(gc);
-			
-			System.out.println(frame);
 		}
 
 	}
 	private void updateDetail() {
 		RenderableHolder.getInstance().remove();
-		RenderableHolder.getInstance().Collision(player);
+		if (RenderableHolder.getInstance().Collision(player)) receiveItemSound.play();
 		if(isAddedBoss) {
 			RenderableHolder.getInstance().Collision(boss);
 			bossBar.setProgress(0.02 * boss.getLife());
@@ -265,13 +300,13 @@ public class GameWindow extends Canvas{
 	}
 	public void isGameEnd() {
 		if(isOver) {
-			gameSound.stop();
-			bossSound.stop();
+			stopAllSound();
 			windowAnimation.stop();
 			root.getChildren().remove(bosspane);
 			isStageOn = false;
 			if(player.isDead()) {
-				GameOverScreen.startanimation(gc, player.getScore());												
+				GameOverScreen.startanimation(gc, player.getScore());
+				gameoverSound.play();
 			}
 			if(isAddedBoss && boss.isDead()) {
 				Thread t = new Thread(new Runnable() {
@@ -285,6 +320,7 @@ public class GameWindow extends Canvas{
 							e.printStackTrace();
 						}
 						WinnerScreen.startanimation(gc, player.getScore());
+						winnerSound.play();
 					}
 				});
 				t.start();
@@ -300,6 +336,30 @@ public class GameWindow extends Canvas{
 		gameScreen.setLife(player.getLife());
 		gameScreen.setBarrierOn(player.isBarrierOn());
 		gameScreen.setBarrierCount(player.getBarrierCount());
+	}
+	public void stopAllSound() {
+		gameSound.stop();
+		bossSound.stop();
+		warningSound.stop();
+
+		shootingSound.stop();
+		levelupSound.stop();
+		receiveItemSound.stop();
+		
+		winnerSound.stop();
+		gameoverSound.stop();
+	}
+	public void setSoundVolume() {
+		gameSound.setVolume(0.6);
+		bossSound.setVolume(0.8);
+		warningSound.setVolume(0.8);
+		
+		shootingSound.setVolume(0.08);
+		levelupSound.setVolume(1.5);
+		receiveItemSound.setVolume(0.8);
+		
+		winnerSound.setVolume(0.8);
+		gameoverSound.setVolume(0.8);
 	}
 	public void fire() {
 		player.attack('w');

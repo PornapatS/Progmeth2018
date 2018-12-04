@@ -68,7 +68,8 @@ public class RenderableHolder {
 		return Math.sqrt((x1 - x2)*(x1 - x2)+(y1 - y2)*(y1 - y2));
 	}
 	
-	public void Collision(Player player) {
+	public boolean Collision(Player player) {
+		boolean isReceive = false;
 		double x = player.getX();
 		double y = player.getY();
 		double c = player.getCenterX();
@@ -97,6 +98,7 @@ public class RenderableHolder {
 					if (getDistance(x, ((Item) i).getX(), y, ((Item) i).getY()) <= 60) {
 						((Item) i).effect(player);
 						((Item) i).setShow(false);
+						isReceive = true;
 					}
 				}
 				if (i instanceof Bullet) {
@@ -113,6 +115,7 @@ public class RenderableHolder {
 				}
 			}
 		}
+		return isReceive;
 	}
 	public void Collision(Alien alien, Player player) {
 		double x = alien.getX();

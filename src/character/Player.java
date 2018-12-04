@@ -18,7 +18,6 @@ public class Player extends Position {
 	private String control;
 	public Image ownerPic = new Image("player.png");
 	public Image barrierPic = new Image("barrier.png");
-	public AudioClip levelupSound = new AudioClip(ClassLoader.getSystemResource("levelup.wav").toString());
 	
 	public Player() {
 		super(400,500);
@@ -77,7 +76,6 @@ public class Player extends Position {
 	public void levelUp() {
 		level++;
 		speed++;
-		levelupSound.play();
 	}
 	public int getScore() {
 		return score;
