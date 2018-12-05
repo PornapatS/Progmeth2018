@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
 
 public class Buttons extends HBox{
 
-	private static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 20);
+	private static final Font mainFont = Font.loadFont(ClassLoader.getSystemResourceAsStream("supermarket.ttf"), 24);
 	public Button startButton;
 	public Button exitButton;
 	
@@ -29,8 +29,8 @@ public class Buttons extends HBox{
 		exitButton.setPrefSize(100, 45);
 		startButton.setFont(mainFont);
 		exitButton.setFont(mainFont);
-		startButton.setStyle("-fx-background-color: #6495ed; -fx-text-fill: #ffffff; -fx-font-size: 1.5em;");
-		exitButton.setStyle("-fx-background-color: #6495ed; -fx-text-fill: #ffffff; -fx-font-size: 1.5em;");
+		startButton.setStyle("-fx-background-color: #6495ed; -fx-text-fill: #ffffff;");
+		exitButton.setStyle("-fx-background-color: #6495ed; -fx-text-fill: #ffffff;");
 		getChildren().addAll(startButton, exitButton);
 	}
 	public void setupExitButton() {

@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 
 public abstract class Item extends Position {
 	
-	private int timeLife = 300;
+	private int timeLife = 200;
 	private static Random rand = new Random();
 	public Image itemImage;
 	

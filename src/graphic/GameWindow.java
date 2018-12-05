@@ -184,7 +184,7 @@ public class GameWindow extends Canvas{
 		frame = 0;
 		setState(1);
 		timerAlien = 70;
-		timerItem = 180;
+		timerItem = 300;
 		timerLevel = 2000;
 		isOver = false;
 		isAddedBoss = false;
@@ -286,7 +286,7 @@ public class GameWindow extends Canvas{
 			player.levelUp();
 			levelupSound.play();
 			gameScreen.setLevel(player.getLevel());
-			timerItem -= 50;
+			timerItem -= 20;
 			timerAlien -= 5;
 			timerLevel += 200;
 			frame = 0;
@@ -301,7 +301,7 @@ public class GameWindow extends Canvas{
 		if (RenderableHolder.getInstance().Collision(player)) receiveItemSound.play();
 		if(isAddedBoss) {
 			RenderableHolder.getInstance().Collision(boss);
-			bossBar.setProgress(0.02 * boss.getLife());
+			bossBar.setProgress(0.0125 * boss.getLife());
 			bosspane.setTopAnchor(bossBar, boss.getY() - 50);
 			bosspane.setLeftAnchor(bossBar, boss.getX() + 110);
 		}
