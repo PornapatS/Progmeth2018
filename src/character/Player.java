@@ -2,7 +2,6 @@ package character;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.media.AudioClip;
 import sharedObject.RenderableHolder;
 
 public class Player extends Position {

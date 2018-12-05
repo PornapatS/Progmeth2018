@@ -29,6 +29,8 @@ public class Buttons extends HBox{
 		exitButton.setPrefSize(100, 45);
 		startButton.setFont(mainFont);
 		exitButton.setFont(mainFont);
+		startButton.setStyle("-fx-background-color: #6495ed; -fx-text-fill: #ffffff; -fx-font-size: 1.5em;");
+		exitButton.setStyle("-fx-background-color: #6495ed; -fx-text-fill: #ffffff; -fx-font-size: 1.5em;");
 		getChildren().addAll(startButton, exitButton);
 	}
 	public void setupExitButton() {
